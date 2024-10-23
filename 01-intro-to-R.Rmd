@@ -1,0 +1,189 @@
+# Introduction to R for Absolute Beginners
+
+
+Welcome to R! This guide is designed to help absolute beginners get started with R, a powerful tool for statistical computing and data visualization. R can seem overwhelming at first, but this introduction will walk you through the basics, step by step. If you are already familiar with R, feel free to skip this section.
+
+## What is R?
+
+R is a programming language and software environment specifically designed for statistical analysis and data visualization. It is widely used by data scientists, statisticians, and researchers.
+
+## Getting Started with R
+
+### Installing R and RStudio
+
+To use R, you will need two things:
+1. **R**: Download and install it from [CRAN](https://cran.r-project.org/).
+2. **RStudio**: A user-friendly interface for R, which you can download from [RStudio's website](https://posit.co/download/rstudio-desktop/).
+
+### RStudio Interface
+
+When you open RStudio, you'll see four main panels:
+- **Source/Script Editor**: Write and save your R code here.
+- **Console**: Run code directly and see the output.
+- **Environment/History**: See your data and objects.
+- **Files/Plots/Packages/Help**: Access files, view plots, manage packages, and get help. you can easily load data sets using this option.
+
+## Basic Syntax in R
+
+### Running Code
+
+You can run code directly in the console or write it in the script editor and press `Ctrl + Enter` (or `Cmd + Enter` on a Mac) to run it. We always suggest you do the later, that way your code is saved. 
+
+### Basic Calculations
+
+At its simplest, R can be used as a calculator. For example:
+
+```{r, eval=FALSE}
+1 + 1
+5 * 3
+10 / 2
+2^3
+```
+
+### Variables 
+
+You can store values in **variables** or as they sometimes called **objects**. A variable is like a box that holds data.
+
+```{r, eval=FALSE}
+x <- 5
+y <- 10
+sum <- x + y
+sum
+```
+
+### Data Types
+
+R has several basic data types:
+
+- Numeric: Numbers like 42 or 3.14.
+- Character: Text or strings like "Hello".
+- Logical: `TRUE` or `FALSE`.
+
+```{r, eval=FALSE}
+num_var <- 42  # numeric
+char_var <- "Hello, R!"  # string
+log_var <- TRUE # logical 
+```
+
+
+### Functions
+
+A function is a piece of code that performs a specific task. For example, `sqrt()` calculates the square root:
+
+```{r, eval=FALSE}
+sqrt(16)
+```
+
+There are many in-built functions in R, and you can also create your own functions. And of course, as you will see in the rest of the chapters, many of the functionalities you will use come from packages, which can be installed and loaded follows:
+
+```{r, eval=FALSE}
+install.packages("package_name")
+library(package_name)
+```
+
+## Working with Data
+
+### Vectors
+
+A vector is a sequence of data elements of the same basic type. You can create a vector using the `c()` function:
+
+```{r, eval=FALSE}
+my_vector <- c(1, 2, 3, 4, 5)
+my_vector
+```
+
+### Data Frames
+
+A data frame is a table-like data structure (i.e., a spreadsheet) that stores data. You can create a data frame using the
+`data.frame()` function:
+
+```{r, eval=TRUE}
+my_data <- data.frame(
+  Name = c("A", "B", "C"),
+  Age = c(25, 30, 35),
+  Height = c(175, 182, 168)
+)
+my_data
+```
+
+
+## Loading Data into R
+
+R can read data from various file formats, as already mentioned, you can also use the file tab for this. Here are some examples of how this if formally done through the console, for some common file formats. Before we start, make sure to set your working directory to the location where your data is stored. You can set your working directory using the `setwd()` function. Alternatively, you can use the `here` package to set your working directory to the location of your R script. You can also navigate on top of R studio to the session tab and set your working directory from there. Finally you can use the keyboard shortcut `Ctrl + Shift + H` to set your working directory.
+
+### Reading a CSV file
+
+```{r, eval=FALSE}
+# Make sure the 'data.csv' file is in your working directory
+my_data <- read.csv("data.csv")
+head(my_data)
+```
+
+### Reading an Excel File
+
+```{r, eval=FALSE}
+# Install the readxl package if you haven't already
+#install.packages("readxl")
+library(readxl)
+
+# Reading an Excel file
+my_data <- read_excel("data.xlsx", sheet = 1)
+head(my_data)
+```
+
+### Reading Data from R's Built-in Datasets
+
+Many R packages come with built-in datasets that you can use to practice. For example, the `mtcars` dataset is built into R:
+
+
+```{r, eval=TRUE}
+# Load the 'mtcars' dataset
+data(mtcars)
+head(mtcars)
+```
+
+## Doing a statistical analysis
+
+R is a powerful tool for statistical analysis. You can perform a wide range of statistical tests and analyses using R. Here is an example of how to perform a simple t-test.
+
+### T-Test
+
+
+```{r, eval=TRUE}
+# Subset the data into two groups
+auto <- mtcars$mpg[mtcars$am == 0]  # Automatic cars
+manual <- mtcars$mpg[mtcars$am == 1]  # Manual cars
+
+# Perform a t-test
+t_test_result <- t.test(auto, manual)
+t_test_result
+```
+
+
+### Visualizing data
+
+R is also great for data visualization. You can create a wide range of plots and graphs using R. Here is an example of how to create a boxlot. R has in built functions for many types of plots, and you can also use the `ggplot2` package for more advanced plots.
+
+```{r, eval=TRUE}
+boxplot(mpg ~ am, data = mtcars,
+        main = "Miles Per Gallon (mpg) by Transmission Type",
+        xlab = "Transmission (0 = Automatic, 1 = Manual)",
+        ylab = "Miles Per Gallon (mpg)")
+```
+
+
+## Additional Resources
+
+This introduction is just the tip of the iceberg. R is a vast and powerful tool with a steep learning curve. Here are some additional resources to help you continue your journey with R:
+
+- [R for Data Science](https://r4ds.had.co.nz/): A comprehensive guide to data science with R.
+- [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/): Handy cheatsheets for various R topics.
+- [Stack Overflow](https://stackoverflow.com/): A great place to ask questions and find answers about R.
+- [R Documentation](https://www.rdocumentation.org/): Official documentation for R packages.
+
+
+## Conclusion
+
+Congratulations! You've completed the introduction to R. We hope this guide has given you a solid foundation to start exploring R on your own.
+
+

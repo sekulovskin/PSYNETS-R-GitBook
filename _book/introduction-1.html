@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction | PSYNETS: R Essentials</title>
+  <meta name="description" content="Chapter 2 Introduction | PSYNETS: R Essentials" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction | PSYNETS: R Essentials" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction | PSYNETS: R Essentials" />
+  
+  
+  
+
+<meta name="author" content="The PSYNETS Team" />
+
+
+<meta name="date" content="2024-10-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="package-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">PSYNETS: R Essentials</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i><b>1.1</b> Structure of the book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-1.html"><a href="introduction-1.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-1.html"><a href="introduction-1.html#what-is-r"><i class="fa fa-check"></i><b>2.1</b> What is R?</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-1.html"><a href="introduction-1.html#getting-started-with-r"><i class="fa fa-check"></i><b>2.2</b> Getting Started with R</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-1.html"><a href="introduction-1.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.2.1</b> Installing R and RStudio</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-1.html"><a href="introduction-1.html#rstudio-interface"><i class="fa fa-check"></i><b>2.2.2</b> RStudio Interface</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-1.html"><a href="introduction-1.html#basic-syntax-in-r"><i class="fa fa-check"></i><b>2.3</b> Basic Syntax in R</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-1.html"><a href="introduction-1.html#running-code"><i class="fa fa-check"></i><b>2.3.1</b> Running Code</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-1.html"><a href="introduction-1.html#basic-calculations"><i class="fa fa-check"></i><b>2.3.2</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-1.html"><a href="introduction-1.html#variables"><i class="fa fa-check"></i><b>2.3.3</b> Variables</a></li>
+<li class="chapter" data-level="2.3.4" data-path="introduction-1.html"><a href="introduction-1.html#data-types"><i class="fa fa-check"></i><b>2.3.4</b> Data Types</a></li>
+<li class="chapter" data-level="2.3.5" data-path="introduction-1.html"><a href="introduction-1.html#functions"><i class="fa fa-check"></i><b>2.3.5</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-1.html"><a href="introduction-1.html#working-with-data"><i class="fa fa-check"></i><b>2.4</b> Working with Data</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-1.html"><a href="introduction-1.html#vectors"><i class="fa fa-check"></i><b>2.4.1</b> Vectors</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduction-1.html"><a href="introduction-1.html#data-frames"><i class="fa fa-check"></i><b>2.4.2</b> Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-1.html"><a href="introduction-1.html#loading-data-into-r"><i class="fa fa-check"></i><b>2.5</b> Loading Data into R</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-1.html"><a href="introduction-1.html#reading-a-csv-file"><i class="fa fa-check"></i><b>2.5.1</b> Reading a CSV file</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-1.html"><a href="introduction-1.html#reading-an-excel-file"><i class="fa fa-check"></i><b>2.5.2</b> Reading an Excel File</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction-1.html"><a href="introduction-1.html#reading-data-from-rs-built-in-datasets"><i class="fa fa-check"></i><b>2.5.3</b> Reading Data from R’s Built-in Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduction-1.html"><a href="introduction-1.html#doing-a-statistical-analysis"><i class="fa fa-check"></i><b>2.6</b> Doing a statistical analysis</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="introduction-1.html"><a href="introduction-1.html#t-test"><i class="fa fa-check"></i><b>2.6.1</b> T-Test</a></li>
+<li class="chapter" data-level="2.6.2" data-path="introduction-1.html"><a href="introduction-1.html#visualizing-data"><i class="fa fa-check"></i><b>2.6.2</b> Visualizing data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="introduction-1.html"><a href="introduction-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional Resources</a></li>
+<li class="chapter" data-level="2.8" data-path="introduction-1.html"><a href="introduction-1.html#conclusion"><i class="fa fa-check"></i><b>2.8</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="package-1.html"><a href="package-1.html"><i class="fa fa-check"></i><b>3</b> Package 1</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PSYNETS: R Essentials</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-1" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction<a href="introduction-1.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Welcome to R! This guide is designed to help absolute beginners get started with R, a powerful tool for statistical computing and data visualization. R can seem overwhelming at first, but this introduction will walk you through the basics, step by step. If you are already familiar with R, feel free to skip this section.</p>
+<div id="what-is-r" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> What is R?<a href="introduction-1.html#what-is-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R is a programming language and software environment specifically designed for statistical analysis and data visualization. It is widely used by data scientists, statisticians, and researchers.</p>
+</div>
+<div id="getting-started-with-r" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Getting Started with R<a href="introduction-1.html#getting-started-with-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="installing-r-and-rstudio" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Installing R and RStudio<a href="introduction-1.html#installing-r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To use R, you will need two things:
+1. <strong>R</strong>: Download and install it from <a href="https://cran.r-project.org/">CRAN</a>.
+2. <strong>RStudio</strong>: A user-friendly interface for R, which you can download from <a href="https://posit.co/download/rstudio-desktop/">RStudio’s website</a>.</p>
+</div>
+<div id="rstudio-interface" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> RStudio Interface<a href="introduction-1.html#rstudio-interface" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When you open RStudio, you’ll see four main panels:
+- <strong>Source/Script Editor</strong>: Write and save your R code here.
+- <strong>Console</strong>: Run code directly and see the output.
+- <strong>Environment/History</strong>: See your data and objects.
+- <strong>Files/Plots/Packages/Help</strong>: Access files, view plots, manage packages, and get help. you can easily load data sets using this option.</p>
+</div>
+</div>
+<div id="basic-syntax-in-r" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Basic Syntax in R<a href="introduction-1.html#basic-syntax-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="running-code" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Running Code<a href="introduction-1.html#running-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can run code directly in the console or write it in the script editor and press <code>Ctrl + Enter</code> (or <code>Cmd + Enter</code> on a Mac) to run it. We always suggest you do the later, that way your code is saved.</p>
+</div>
+<div id="basic-calculations" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Basic Calculations<a href="introduction-1.html#basic-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>At its simplest, R can be used as a calculator. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction-1.html#cb1-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb1-2"><a href="introduction-1.html#cb1-2" tabindex="-1"></a><span class="dv">5</span> <span class="sc">*</span> <span class="dv">3</span></span>
+<span id="cb1-3"><a href="introduction-1.html#cb1-3" tabindex="-1"></a><span class="dv">10</span> <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb1-4"><a href="introduction-1.html#cb1-4" tabindex="-1"></a><span class="dv">2</span><span class="sc">^</span><span class="dv">3</span></span></code></pre></div>
+</div>
+<div id="variables" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Variables<a href="introduction-1.html#variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can store values in <strong>variables</strong> or as they sometimes called <strong>objects</strong>. A variable is like a box that holds data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="introduction-1.html#cb2-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb2-2"><a href="introduction-1.html#cb2-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb2-3"><a href="introduction-1.html#cb2-3" tabindex="-1"></a>sum <span class="ot">&lt;-</span> x <span class="sc">+</span> y</span>
+<span id="cb2-4"><a href="introduction-1.html#cb2-4" tabindex="-1"></a>sum</span></code></pre></div>
+</div>
+<div id="data-types" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Data Types<a href="introduction-1.html#data-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R has several basic data types:</p>
+<ul>
+<li>Numeric: Numbers like 42 or 3.14.</li>
+<li>Character: Text or strings like “Hello”.</li>
+<li>Logical: <code>TRUE</code> or <code>FALSE</code>.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-1.html#cb3-1" tabindex="-1"></a>num_var <span class="ot">&lt;-</span> <span class="dv">42</span>  <span class="co"># numeric</span></span>
+<span id="cb3-2"><a href="introduction-1.html#cb3-2" tabindex="-1"></a>char_var <span class="ot">&lt;-</span> <span class="st">&quot;Hello, R!&quot;</span>  <span class="co"># string</span></span>
+<span id="cb3-3"><a href="introduction-1.html#cb3-3" tabindex="-1"></a>log_var <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="co"># logical </span></span></code></pre></div>
+</div>
+<div id="functions" class="section level3 hasAnchor" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> Functions<a href="introduction-1.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A function is a piece of code that performs a specific task. For example, <code>sqrt()</code> calculates the square root:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introduction-1.html#cb4-1" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="dv">16</span>)</span></code></pre></div>
+<p>There are many in-built functions in R, and you can also create your own functions. And of course, as you will see in the rest of the chapters, many of the functionalities you will use come from packages, which can be installed and loaded follows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-1.html#cb5-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;package_name&quot;</span>)</span>
+<span id="cb5-2"><a href="introduction-1.html#cb5-2" tabindex="-1"></a><span class="fu">library</span>(package_name)</span></code></pre></div>
+</div>
+</div>
+<div id="working-with-data" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Working with Data<a href="introduction-1.html#working-with-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="vectors" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Vectors<a href="introduction-1.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A vector is a sequence of data elements of the same basic type. You can create a vector using the <code>c()</code> function:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="introduction-1.html#cb6-1" tabindex="-1"></a>my_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb6-2"><a href="introduction-1.html#cb6-2" tabindex="-1"></a>my_vector</span></code></pre></div>
+</div>
+<div id="data-frames" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Data Frames<a href="introduction-1.html#data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A data frame is a table-like data structure (i.e., a spreadsheet) that stores data. You can create a data frame using the
+<code>data.frame()</code> function:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-1.html#cb7-1" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-2"><a href="introduction-1.html#cb7-2" tabindex="-1"></a>  <span class="at">Name =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>),</span>
+<span id="cb7-3"><a href="introduction-1.html#cb7-3" tabindex="-1"></a>  <span class="at">Age =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>),</span>
+<span id="cb7-4"><a href="introduction-1.html#cb7-4" tabindex="-1"></a>  <span class="at">Height =</span> <span class="fu">c</span>(<span class="dv">175</span>, <span class="dv">182</span>, <span class="dv">168</span>)</span>
+<span id="cb7-5"><a href="introduction-1.html#cb7-5" tabindex="-1"></a>)</span>
+<span id="cb7-6"><a href="introduction-1.html#cb7-6" tabindex="-1"></a>my_data</span></code></pre></div>
+<pre><code>##   Name Age Height
+## 1    A  25    175
+## 2    B  30    182
+## 3    C  35    168</code></pre>
+</div>
+</div>
+<div id="loading-data-into-r" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Loading Data into R<a href="introduction-1.html#loading-data-into-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R can read data from various file formats, as already mentioned, you can also use the file tab for this. Here are some examples of how this if formally done through the console, for some common file formats. Before we start, make sure to set your working directory to the location where your data is stored. You can set your working directory using the <code>setwd()</code> function. Alternatively, you can use the <code>here</code> package to set your working directory to the location of your R script. You can also navigate on top of R studio to the session tab and set your working directory from there. Finally you can use the keyboard shortcut <code>Ctrl + Shift + H</code> to set your working directory.</p>
+<div id="reading-a-csv-file" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Reading a CSV file<a href="introduction-1.html#reading-a-csv-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-1.html#cb9-1" tabindex="-1"></a><span class="co"># Make sure the &#39;data.csv&#39; file is in your working directory</span></span>
+<span id="cb9-2"><a href="introduction-1.html#cb9-2" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data.csv&quot;</span>)</span>
+<span id="cb9-3"><a href="introduction-1.html#cb9-3" tabindex="-1"></a><span class="fu">head</span>(my_data)</span></code></pre></div>
+</div>
+<div id="reading-an-excel-file" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Reading an Excel File<a href="introduction-1.html#reading-an-excel-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-1.html#cb10-1" tabindex="-1"></a><span class="co"># Install the readxl package if you haven&#39;t already</span></span>
+<span id="cb10-2"><a href="introduction-1.html#cb10-2" tabindex="-1"></a><span class="co">#install.packages(&quot;readxl&quot;)</span></span>
+<span id="cb10-3"><a href="introduction-1.html#cb10-3" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb10-4"><a href="introduction-1.html#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="introduction-1.html#cb10-5" tabindex="-1"></a><span class="co"># Reading an Excel file</span></span>
+<span id="cb10-6"><a href="introduction-1.html#cb10-6" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb10-7"><a href="introduction-1.html#cb10-7" tabindex="-1"></a><span class="fu">head</span>(my_data)</span></code></pre></div>
+</div>
+<div id="reading-data-from-rs-built-in-datasets" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Reading Data from R’s Built-in Datasets<a href="introduction-1.html#reading-data-from-rs-built-in-datasets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Many R packages come with built-in datasets that you can use to practice. For example, the <code>mtcars</code> dataset is built into R:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-1.html#cb11-1" tabindex="-1"></a><span class="co"># Load the &#39;mtcars&#39; dataset</span></span>
+<span id="cb11-2"><a href="introduction-1.html#cb11-2" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb11-3"><a href="introduction-1.html#cb11-3" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code></pre></div>
+<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+</div>
+</div>
+<div id="doing-a-statistical-analysis" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Doing a statistical analysis<a href="introduction-1.html#doing-a-statistical-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R is a powerful tool for statistical analysis. You can perform a wide range of statistical tests and analyses using R. Here is an example of how to perform a simple t-test.</p>
+<div id="t-test" class="section level3 hasAnchor" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> T-Test<a href="introduction-1.html#t-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introduction-1.html#cb13-1" tabindex="-1"></a><span class="co"># Subset the data into two groups</span></span>
+<span id="cb13-2"><a href="introduction-1.html#cb13-2" tabindex="-1"></a>auto <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">0</span>]  <span class="co"># Automatic cars</span></span>
+<span id="cb13-3"><a href="introduction-1.html#cb13-3" tabindex="-1"></a>manual <span class="ot">&lt;-</span> mtcars<span class="sc">$</span>mpg[mtcars<span class="sc">$</span>am <span class="sc">==</span> <span class="dv">1</span>]  <span class="co"># Manual cars</span></span>
+<span id="cb13-4"><a href="introduction-1.html#cb13-4" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="introduction-1.html#cb13-5" tabindex="-1"></a><span class="co"># Perform a t-test</span></span>
+<span id="cb13-6"><a href="introduction-1.html#cb13-6" tabindex="-1"></a>t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(auto, manual)</span>
+<span id="cb13-7"><a href="introduction-1.html#cb13-7" tabindex="-1"></a>t_test_result</span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  auto and manual
+## t = -3.7671, df = 18.332, p-value = 0.001374
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -11.280194  -3.209684
+## sample estimates:
+## mean of x mean of y 
+##  17.14737  24.39231</code></pre>
+</div>
+<div id="visualizing-data" class="section level3 hasAnchor" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Visualizing data<a href="introduction-1.html#visualizing-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R is also great for data visualization. You can create a wide range of plots and graphs using R. Here is an example of how to create a boxlot. R has in built functions for many types of plots, and you can also use the <code>ggplot2</code> package for more advanced plots.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction-1.html#cb15-1" tabindex="-1"></a><span class="fu">boxplot</span>(mpg <span class="sc">~</span> am, <span class="at">data =</span> mtcars,</span>
+<span id="cb15-2"><a href="introduction-1.html#cb15-2" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Miles Per Gallon (mpg) by Transmission Type&quot;</span>,</span>
+<span id="cb15-3"><a href="introduction-1.html#cb15-3" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Transmission (0 = Automatic, 1 = Manual)&quot;</span>,</span>
+<span id="cb15-4"><a href="introduction-1.html#cb15-4" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;Miles Per Gallon (mpg)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+</div>
+<div id="additional-resources" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Additional Resources<a href="introduction-1.html#additional-resources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This introduction is just the tip of the iceberg. R is a vast and powerful tool with a steep learning curve. Here are some additional resources to help you continue your journey with R:</p>
+<ul>
+<li><a href="https://r4ds.had.co.nz/">R for Data Science</a>: A comprehensive guide to data science with R.</li>
+<li><a href="https://www.rstudio.com/resources/cheatsheets/">RStudio Cheatsheets</a>: Handy cheatsheets for various R topics.</li>
+<li><a href="https://stackoverflow.com/">Stack Overflow</a>: A great place to ask questions and find answers about R.</li>
+<li><a href="https://www.rdocumentation.org/">R Documentation</a>: Official documentation for R packages.</li>
+</ul>
+</div>
+<div id="conclusion" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Conclusion<a href="introduction-1.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Congratulations! You’ve completed the introduction to R. We hope this guide has given you a solid foundation to start exploring R on your own.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="package-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-intro-to-R.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
