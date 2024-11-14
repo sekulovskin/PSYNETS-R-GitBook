@@ -1,1 +1,6 @@
 # Q&A
+
+Possible things to include: 
+* Different data formats, e.g., going from wide to long 
+* missing data 
+* non-normality, skewness 
