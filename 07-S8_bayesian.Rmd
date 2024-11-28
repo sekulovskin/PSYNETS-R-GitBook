@@ -1,1 +1,13 @@
-# Bayesian
+# Bayesian Graphical Modeling 
+
+
+- Give a small theoretical intro
+
+- Introduce bgms
+
+- Introduce easybgm 
+
+- Possibly maybe also introduce JASP 
+
+
+

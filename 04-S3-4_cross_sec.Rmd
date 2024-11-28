@@ -1,1 +1,7 @@
-# Corss-Sectional 
+# Cross-Sectional 
+
+Things to include: 
+* Warning messages vs. error messages 
+* Non-positive definite matrices 
+* Which estimator to use? 
+* Which sample size to take? 
