@@ -18,10 +18,19 @@ To use R, you will need two things:
 ### RStudio Interface
 
 When you open RStudio, you'll see four main panels:
-- **Source/Script Editor**: Write and save your R code here.
+- **Source/Script Editor**: Write and save your R code here. To create an R script go to *File -> New File -> R Script*.
+
 - **Console**: Run code directly and see the output.
+
 - **Environment/History**: See your data and objects.
-- **Files/Plots/Packages/Help**: Access files, view plots, manage packages, and get help. you can easily load data sets using this option.
+
+- **Files/Plots/Packages/Help**: Access files (available in your working directory, see below), view plots, manage packages, and get help. you can easily load data sets using this option.
+
+
+## Working Directory
+
+The working directory is the folder where R will look for files. You can set your working directory using the `setwd()` function. Alternatively, you can use the `here` package to set your working directory to the location of your R script. You can also navigate on top of R studio to the session tab and set your working directory from there. Finally you can use the keyboard shortcut `Ctrl + Shift + H` to set your working directory. If you cannot load a certain file (usually a data set), it is likely that your working directory is not set correctly.
+
 
 ## Basic Syntax in R
 
@@ -61,7 +70,7 @@ R has several basic data types:
 
 ```{r, eval=FALSE}
 num_var <- 42  # numeric
-char_var <- "Hello, R!"  # string
+char_var <- "Hello!"  # string
 log_var <- TRUE # logical 
 ```
 
@@ -74,14 +83,14 @@ A function is a piece of code that performs a specific task. For example, `sqrt(
 sqrt(16)
 ```
 
-There are many in-built functions in R, and you can also create your own functions. And of course, as you will see in the rest of the chapters, many of the functionalities you will use come from packages, which can be installed and loaded follows:
+There are many in-built functions in R, and you can also create your own functions (however, that is beyond the scope of this book). And of course, as you will see in the other chapters, many of the functionalities you will use come from packages, which can be installed and loaded follows:
 
 ```{r, eval=FALSE}
 install.packages("package_name")
 library(package_name)
 ```
 
-## Working with Data
+## Working with Data & Various Data Structures 
 
 ### Vectors
 
@@ -92,10 +101,55 @@ my_vector <- c(1, 2, 3, 4, 5)
 my_vector
 ```
 
+
+### Matrices
+
+A matrix is a two-dimensional data structure where all elements are of the same type (usually numeric). Unlike a data frame, a matrix does not allow for different types of data (e.g., characters and numbers) in different columns. You can create a matrix using the `matrix()` function:
+
+```{r, eval=TRUE}
+my_matrix <- matrix(
+  data = 1:9,      # The data to fill the matrix
+  nrow = 3,        # Number of rows
+  ncol = 3,        # Number of columns
+  byrow = TRUE     # Fill the matrix by rows
+)
+my_matrix
+```
+
+The concept of a matrix is closely tied to network models, since in practice the estimated network model is a matrix of connections between nodes. Below is an example of constructing a symmetric 5x5 adjacency matrix (i.e., a a graph that shows which nodes are present without carrying information about the strength of the nodes, zeros indicate absent edges and ones present edges) for an undirected graph and visualizing it using the qgraph package:
+
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+# Create a 5x5 symmetric adjacency matrix
+adj_matrix <- matrix(
+  data = c(0, 1, 1, 0, 1,
+           1, 0, 1, 1, 0,
+           1, 1, 0, 1, 0,
+           0, 1, 1, 0, 1,
+           1, 0, 0, 1, 0),
+  nrow = 5,
+  ncol = 5,
+  byrow = TRUE
+)
+
+# Add row and column names for clarity
+colnames(adj_matrix) <- rownames(adj_matrix) <- c("Node1", "Node2", "Node3", "Node4", "Node5")
+
+# Print the adjacency matrix
+adj_matrix
+
+# Plot the graph using qgraph
+library(qgraph)
+qgraph(adj_matrix, 
+       layout = "spring", 
+       vsize = 8, 
+       labels = colnames(adj_matrix))
+```
+
+Notice that adjacency matrices are a specific use of matrices where symmetry often indicates undirected relationships, and zeros along the diagonal reflect the absence of self-loops.
+
 ### Data Frames
 
-A data frame is a table-like data structure (i.e., a spreadsheet) that stores data. You can create a data frame using the
-`data.frame()` function:
+A data frame is a table-like data structure (i.e., a spreadsheet) that stores data. You can create a data frame using the `data.frame()` function:
 
 ```{r, eval=TRUE}
 my_data <- data.frame(
@@ -106,10 +160,55 @@ my_data <- data.frame(
 my_data
 ```
 
+### Matrix vs. Data Frame
+
+While matrices and data frames might look similar at first glance (both are rectangular), there are key differences:
+
+- Data Frames can store different types of data in each column (e.g., numeric, character, logical).
+
+- Matrices store only one type of data across all elements.
+
+If you convert a matrix to a data frame, it gains the flexibility of mixed data types but may lose some structure if row and column names aren't defined.
+
+
+### Lists
+
+A list in R is a flexible data structure that can hold objects of different types and sizes. Unlike a matrix or data frame, lists are not restricted to a rectangular shape. You can think of a list as a container for various objects, including vectors, matrices, data frames, or even other lists. Usually the results of many of the analyses are stored in lists as they can hold many different types of objects.
+
+Create a list using the `list()` function:
+
+```{r, eval=TRUE}
+my_list <- list(
+  Name = "A",
+  Age = 25,
+  Scores = c(90, 85, 88),
+  Nested = list(a = 1, b = 2)
+)
+my_list
+``` 
+
+
+### Arrays
+
+An array is a multi-dimensional generalization of a matrix. While matrices are limited to two dimensions (rows and columns), arrays can have more dimensions. Arrays store data of the same type, and you can create one using the array() function:
+
+```{r}
+my_array <- array(
+  data = 1:24, 
+  dim = c(4, 3, 2) # 4 rows, 3 columns, 2 layers
+)
+my_array
+```
+
+## Relationship to Lists and Arrays 
+
+- Lists are more flexible than matrices and data frames, as they can store mixed types and structures. 
+
+- Arrays are similar to matrices but can expand into more than two dimensions, making them suitable for complex datasets like 3D models or time-series grids.
 
 ## Loading Data into R
 
-R can read data from various file formats, as already mentioned, you can also use the file tab for this. Here are some examples of how this if formally done through the console, for some common file formats. Before we start, make sure to set your working directory to the location where your data is stored. You can set your working directory using the `setwd()` function. Alternatively, you can use the `here` package to set your working directory to the location of your R script. You can also navigate on top of R studio to the session tab and set your working directory from there. Finally you can use the keyboard shortcut `Ctrl + Shift + H` to set your working directory.
+R can read data from various file formats, as already mentioned, you can also use the file tab for this. Here are some examples of how this can be done through the console, for some common file formats. Before we start, make sure to set your working directory to the location where your data is stored. 
 
 ### Reading a CSV file
 
@@ -142,12 +241,11 @@ data(mtcars)
 head(mtcars)
 ```
 
-## Doing a statistical analysis
+## Performing a statistical analysis
 
 R is a powerful tool for statistical analysis. You can perform a wide range of statistical tests and analyses using R. Here is an example of how to perform a simple t-test.
 
 ### T-Test
-
 
 ```{r, eval=TRUE}
 # Subset the data into two groups
@@ -182,8 +280,11 @@ This introduction is just the tip of the iceberg. R is a vast and powerful tool 
 - [R Documentation](https://www.rdocumentation.org/): Official documentation for R packages.
 
 
+The second chapter in the book *Network Psychometrics with R* [@NP_with_R_book] also provides 
+a comprehensive introduction to R. 
+
 ## Conclusion
 
-Congratulations! You've completed the introduction to R. We hope this guide has given you a solid foundation to start exploring R on your own.
+Congratulations! You've completed the introduction to R. We hope this guide has given you a solid foundation to start exploring R on your own. In the following chapters, we explore the specific functionalities of the R packages that will be used throughout this workshop. If you have any questions or need further assistance, don't hesitate to ask. Happy "networking"!
 
 
