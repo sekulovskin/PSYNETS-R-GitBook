@@ -1,6 +1,5 @@
 # Introduction to R for Absolute Beginners
 
-
 Welcome to R! This guide is designed to help absolute beginners get started with R, a powerful tool for statistical computing and data visualization. R can seem overwhelming at first, but this introduction will walk you through the basics, step by step. If you are already familiar with R, feel free to skip this section.
 
 ## What is R?
@@ -280,8 +279,7 @@ This introduction is just the tip of the iceberg. R is a vast and powerful tool 
 - [R Documentation](https://www.rdocumentation.org/): Official documentation for R packages.
 
 
-The second chapter in the book *Network Psychometrics with R* [@NP_with_R_book] also provides 
-a comprehensive introduction to R. 
+The second chapter in the book *Network Psychometrics with R* [@NP_with_R_book] also provides a comprehensive introduction to R. 
 
 ## Conclusion
 
