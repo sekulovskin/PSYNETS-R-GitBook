@@ -1,4 +1,4 @@
-# Cross-Sectional 
+# Estimating Corsssectional Networks
 
 Things to include: 
 * Warning messages vs. error messages 
