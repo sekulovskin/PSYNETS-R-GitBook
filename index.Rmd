@@ -1,7 +1,6 @@
 --- 
 title: "PSYNETS: R Essentials"
 author: "The PSYNETS Team"
-date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -12,10 +11,17 @@ github-repo: rstudio/bookdown-demo
 csl: apa.csl
 ---
 
+
 # Introduction
 
 This book is designed for participants of the PSYNETS workshop to help them get acquainted with the basic functionalities of R and the R packages used throughout the sessions. It has been compiled based on the most frequently asked questions and challenges that participants have encountered during previous workshops. While not a comprehensive guide to R for network psychometrics, it serves as a quick reference to help you get started with R and the specific packages used in the workshop. The primary focus is on installing packages, loading data from various formats, and understanding the unique features of each packages covered in the course. Whenever you have a technical question about R, we recommend consulting this book first.
 
-This book is structured as follows...
+This book is structured as follows. The next chapter provides a quick overview of R's basic features and functionalities. If you’re already familiar with R, feel free to skip the chapter. The following five chapters correspond to each of the workshop sessions. In these chapters, we demonstrate simple analyses and highlight common challenges when working with the featured packages.
+
+We hope you enjoy your week in Amsterdam and gain valuable insights into psychological network modeling!
+
+![](PSYNETS_logo.png)
+
+
 
 

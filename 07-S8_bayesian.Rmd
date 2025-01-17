@@ -1,4 +1,4 @@
-# Bayesian Graphical Modeling
+# Bayesian Analysis of Networks 
 
 ## Bayesian Graphical Modeling in a Nutshell
 
@@ -12,7 +12,7 @@ For an accessible introduction to the Bayesian framework specifically for psycho
 
 ## Software Overview
 
-Three R packages facilitate the Bayesian analysis of graphical models: **bgms** [@bgms] for binary and ordinal data, as well as **BDgraph** [@bdgraph], and **BGGM** [@BGGM],  which handle Gaussian graphical models and Gaussian copula models [the latter allow for the analysis of non-continuous data @DobraLenkoski_2011]. In this workshop, we will focus on the **easybgm** package, which integrates **bgms**, **BDgraph**, and **BGGM** in a user-friendly manner. This chapter introduces the core functionalities of **easybgm** through a simple example. For more comprehensive information, refer to the software paper [@easybgm].
+Three R packages facilitate the Bayesian analysis of graphical models: **bgms** [@bgms] for binary and ordinal data, as well as **BDgraph** [@bdgraph], and **BGGM** [@BGGM],  which handle Gaussian graphical models and Gaussian copula models [the latter allow for the analysis of non-continuous data @DobraLenkoski_2011]. In this workshop, we will focus on the **easybgm** package, which integrates **bgms**, **BDgraph**, and **BGGM** in a user-friendly manner. This chapter introduces the core functionalities of **easybgm** through a simple example. For more comprehensive information, see the software paper [@easybgm].
 
 The R package **BDgraph** is also implemented in the open-source software JASP [@JASP], which is a user-friendly alternative for those who prefer a point and click graphical user interface. Soon, all the functionalities of the **easybgm** package will also be available in JASP. 
 
@@ -115,9 +115,9 @@ As already mentioned in the introduction, the **BDgraph** package is also implem
 This software provides a user-friendly interface for Bayesian graphical modeling, which is especially useful for those who prefer a graphical user interface. The functionalities of the **easybgm** package will soon be available in JASP as well in the coming months. Below is a screenshot of the JASP interface for Bayesian graphical modeling.
 
 
-![JASP](JASP.png)
+![A screenshot of the Bayesian Network Analysis module in JASP](JASP.png)
 
-
+# References 
 
 
 
