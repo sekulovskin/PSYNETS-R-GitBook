@@ -117,7 +117,3 @@ A violation of the stationarity assumption is plausible in psychological time se
 Time series data can be stored in either a *long* or *wide* format. In the long format, each row represents a single observation at a specific time point for a specific individual. This means for a single individual, the datafile contains multiple rows corresponding to the number of assessments. In the wide format, each row represents a single individual or unit, and the columns contain observations for each time point. Some functions require the data to be in a long format, such as the graphicalVAR(), gvar(), mlVAR(), and ml_var() functions, while the panelgvar() function requires the data to be in a wide format. 
 
 [TO DO: add examples]
-
-
-
-

@@ -1,12 +1,18 @@
-# Bayesian Graphical Modeling
+# Bayesian Analysis of Networks 
 
 ## Bayesian Graphical Modeling in a Nutshell
 
-The distinctive advantage of the Bayesian way of thinking is by systematically updating our prior knowledge and uncertainty with new information coming from the data. In network psychometrics, the Bayesian approach allows us to quantify uncertainty about which edges are present or absent and calculate probabilities for the inclusion of each edge given the data (i.e., making inferences about the network structure). This enables us to test hypotheses about edge presence *and* absence, by quantifying the evidence in the data for both cases—something not possible within the frequentist framework. For an accessible introduction to the Bayesian framework, specifically for psychology and behavioral sciences, we refer readers to @WagenmakersEtAL_2018_BIP1 or @vandeSchootEtAl_2014_GentleIntro. For a gentle introduction to Bayesian graphical modeling, see @HuthEtAl_2023; and for a more detailed discussion on testing conditional (in)dependence in Bayesian graphical models, see @Sekulovski_2.
+The Bayesian approach to network analysis, called Bayesian graphical modeling, allows us to update our beliefs about the plausibility of particular network structures and network parameter values using the data at hand. In other words, we can learn from our data. Before we can do this, however, we must specify what we know, expect, or believe about the network structure and parameter values in prior probability distributions. These prior probability distributions express the relative plausibility of one structure over another, and one parameter value over another, before we have seen the data. They can be based on theory, on results from previous research, or, as we will do here, we use certain default choices in existing software that have favorable statistical properties. 
+
+Bayes' rule, the famous result you probably know from probability theory, uses the data to update these prior distributions to posterior distributions. It uses the likelihood (the network or graphical model such as a GGM) to evaluate the predictive adequacy of network structures and parameter values. Values that predicted the data well receive an uptick in plausibility while values that predicted the data poorly suffer a decline. The posterior distribution then expresses how much more plausible one particular structure is over another based on the data we have, and as such allows us to express the uncertainty we have that a particular network structure produced the data at hand. 
+
+The Bayesian approach allows us to express the uncertainty we have about whether or not a particular edge is included in the data-generating model in terms of the posterior probability of its inclusion.  We can use this posterior probability to test hypotheses about the presence *or* absence of certain network relations by quantifying the evidence in the data for the two competing hypotheses, which is not possible with a frequentist framework. Note that this is a test of the conditional independence of a pair of variables in the network.
+
+For an accessible introduction to the Bayesian framework specifically for psychology and behavioral science, see @WagenmakersEtAL_2018_BIP1 or @vandeSchootEtAl_2014_GentleIntro. For a gentle introduction to Bayesian graphical modeling, see @HuthEtAl_2023; and for a more detailed discussion of testing for conditional (in)dependence in Bayesian graphical models, see @Sekulovski_2.
 
 ## Software Overview
 
-Three R packages facilitate the Bayesian analysis of graphical models: **bgms** [@bgms] for binary and ordinal data, as well as **BDgraph** [@bdgraph], and **BGGM** [@BGGM],  which handle Gaussian graphical models and Gaussian copula models [the latter allow for the analysis of non-continuous data @DobraLenkoski_2011]. In this workshop, we will focus on the **easybgm** package, which integrates **bgms**, **BDgraph**, and **BGGM** in a user-friendly manner. This chapter introduces the core functionalities of **easybgm** through a simple example. For more comprehensive information, refer to the software paper [@easybgm].
+Three R packages facilitate the Bayesian analysis of graphical models: **bgms** [@bgms] for binary and ordinal data, as well as **BDgraph** [@bdgraph], and **BGGM** [@BGGM],  which handle Gaussian graphical models and Gaussian copula models [the latter allow for the analysis of non-continuous data @DobraLenkoski_2011]. In this workshop, we will focus on the **easybgm** package, which integrates **bgms**, **BDgraph**, and **BGGM** in a user-friendly manner. This chapter introduces the core functionalities of **easybgm** through a simple example. For more comprehensive information, see the software paper [@easybgm].
 
 The R package **BDgraph** is also implemented in the open-source software JASP [@JASP], which is a user-friendly alternative for those who prefer a point and click graphical user interface. Soon, all the functionalities of the **easybgm** package will also be available in JASP. 
 
@@ -109,9 +115,9 @@ As already mentioned in the introduction, the **BDgraph** package is also implem
 This software provides a user-friendly interface for Bayesian graphical modeling, which is especially useful for those who prefer a graphical user interface. The functionalities of the **easybgm** package will soon be available in JASP as well in the coming months. Below is a screenshot of the JASP interface for Bayesian graphical modeling.
 
 
-![JASP](JASP.png)
+![A screenshot of the Bayesian Network Analysis module in JASP](JASP.png)
 
-
+# References 
 
 
 
