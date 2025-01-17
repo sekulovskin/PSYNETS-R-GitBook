@@ -1,1 +1,123 @@
 # Network Estimation from Time Series Data
+
+## Network Estimation from Time Series Data in a Nutshell
+
+Time series data involve repeated measurements over time for one or more individuals, and, within the realm of network analysis, contains multiple variables. This data is often collected through self-report methods, such as smartphone surveys, or through real-time trackers. Time series data differ from other common data types in psychology, such as cross-sectional data, which are collected at a single time point from multiple individuals.
+
+Within time series data, we can distinguish between intensive longitudinal data for a single individual (N = 1), panel data (repeated measures across multiple individuals), and intensive longitudinal data for multiple individuals (N > 1).
+
+A key characteristic of time series data is *temporal dependence*, meaning that the data points are dependent over time. This sequential structure necessitates specialized analysis techniques that account for this temporal dependency in the data. These techniques. These techniques enable us to model the temporal patterns in our data and gain insights into the dynamic relationships between variables, such as how one variable influences another over time, how processes evolve, and potential mechanisms (e.g., through Granger causality).
+
+## Software Overview
+
+In this workshop we mainly focus on the following three R packages the estimate network models from time series data: **graphicalVAR** for ordinal longitudinal data for one individual, **mlVAR** for ordinal longitudinal data for multiple individuals and **psychonetrics**, for ordinal panel data as well as for ordinal longitudinal data for one individual or multiple individuals. This chapter introduces the core functionalities of these packages through a simple example. For more advanced time series modeling such as for time series data containing binary and ordinal data or we refer to the packages xx xx and Chapter xx.
+
+## N = 1
+
+### Graphical VAR
+
+[TO DO: add example code]
+
+### psychonetrics
+
+[TO DO: add example code]
+
+## N > 1
+
+### Multilevel VAR
+
+[TO DO: add example code]
+
+### panel VAR
+
+[TO DO: add example code]
+
+##  Common issues with time-series data
+
+### Missing data
+
+As longitudinal time series data require multiple measurements from the same individual over an extended period, missing values are a common challenge. There are many potential reasons for missing data, and the literature distingsuishes between different types of missingness.
+
+If data are missing entirely at random, meaning the missingness is unrelated to any observed or unobserved variable, it is referred to as missing completely at random (MCAR). MCAR is the least problematic form of missingness as it does not introduce any bias. However, missingness may also follow a pattern. When the probability of data missing depends only on observed data and not on the missing data themselves, it is referred to as missing at random (MAR). Finally, if the probability of the data missing depends on the value of the missing data itself, even after accounting for observed data, this is referred to as  missing not at random (MNAR)
+
+ In addition, data could be missing not at random (MNAR). The probability of a data point being missing depends on the value of the missing data itself, even after accounting for observed data.
+
+Broadly, three approaches can be used to address the issue of missing data: (1) listwise deletion, (2) imputation, or (3) models that account for missing data directly can be employed. Although by no means a full account, in the following sections we will explore some examples of each of these solutions. 
+
+#### listwise deletion of missing data
+
+Listwise deletion means that missing data are handled by removing rows form the dataset. For example, if a response is missing at time t, the rows corresponding to $t-1$ and out of $t+1$ are removed. Thus, listwise deletion results in more data being excluded than just the missing value. This can greatly reduce the effective sample size, especially in datasets with many missing values, potentially leading to reduced statistical power and biased results. Common functions to estimate network models from time-series data such as **graphicalVAR** and **mlVAR** make use of listwise deletion.
+
+
+#### Data imputation 
+
+One way to address missing data is through data imputation, where missing values are estimated and filled in using various techniques. Missing data could be imputated using simple imputation methods (e.g., mean or median imputation) or more advanced techniques such as by using a Kalman filter, which is especially useful for time-series data.
+
+Mean or median imputation is a straightforward way to handle missing data. It works by replacing missing values with the mean (average) or median (middle value) of the observed data for a variable. While simple, this method has some limitations, such as potentially underestimating variability in the dataset. While this method is simple, it assumes that the missing data are MCAR and doesn’t consider temporal relationships or trends in the data.
+
+The Kalman filter is a more sophisticated imputation method, ideal for time-series data where the relationship between values over time is important. It combines predictions from a system model with observed data to estimate missing values dynamically. Imputing missing values through the use of a Kalman filter has been implemented in the na_kalman() function from the R package **imputeTS**. To make use of this function first install and load the **imputeTS** package. 
+
+
+```{r message=FALSE, warning=FALSE}
+# Install package: 
+# install.packages("imputeTS")
+
+# Load library:
+library(imputeTS)
+```
+
+The package comes with an examplary dataset containing missing values called the "tsAirgap" dataset. To impute missing values using a kalman filter we can make use of the na_kalman() function as follows: 
+
+```{r message=FALSE, warning=FALSE}
+# Check data:
+tsAirgap
+
+# Impute missing values using a Kalman filter: 
+tsAirgap <- na_kalman(tsAirgap)
+
+# Check imputation results
+tsAirgap
+```
+
+
+#### Models that account for missing data
+
+Full Information Maximum Likelihood estimation (FIML) is a powerful estimation technique that can handle missing data effectively. Unlike approaches such as listwise deletion, FIML makes use of all available data in the dataset in order to estimate the model. Instead of imputing missing values FIML estimates parameters directly by maximizing the likelihood of the observed data given the specified network model. As FIML uses all available information, it generally provides more accurate parameter estimates and retains statistical power compared to methods that discard incomplete cases. The **psychonetrics** package in R implements FIML for the estimation of psychological networks based on time-series data through the **estimator** argument within the gvar(), panelgvar(), ml_var() functions. When one wants to make use of FIML estimation within these functions, you specify the estimator function as **estimator = "FIML"**.  
+
+### Stationarity
+
+Stationarity means that the statistical properties of the data (e.g., mean, variance, autocorrelation) do not change over time. Many network models, require the time series data to be stationary. Violations in the assumption of stationarity arise if there are trends in the data such as linear or seasonal trends. You can test for trend stationarity in time-series data using the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test through the kpss.test() function from the **tseries** package in R. This function test the null hypothesis that the data is trend stationary.  
+
+```{r message=FALSE, warning=FALSE}
+# Install package: 
+# install.packages("tseries")
+
+# Load library:
+library(tseries)
+```
+
+```{r message=FALSE, warning=FALSE}
+# Generate a 100 values from a normal distributions:
+x <- rnorm(1000)
+
+# Test if variable is stationary 
+kpss.test(x, null = "Trend")
+```
+
+Alternatively, we can fit a linear regression model using time as a predictor. If time significantly predicts the variable of interest, it indicates a linear trend in the data. To remove this trend (detrend the data), we can use the residuals from the fitted linear model, which represent the variability in the data that is not explained by time. These residuals can then be used as the basis for further data estimation.
+
+[TO DO: add example code]
+
+
+A violation of the stationarity assumption is plausible in psychological time series data. For example, we may observe shifts in the mean of affect following significant life events or treatments. Interestingly, these very trends are often the phenomena we aim to model. In such cases, removing these trends through detrending might obscure meaningful patterns and could be counterproductive. Instead, these changes can be explicitly modeled using a time-varying network model, see Chapter XX. However, not all datasets are suitable for estimating time-varying network models due to limitations such as sample size. When explicit modeling of time-varying trends is not feasible, we have two options: (1) accept the violation of stationarity and interpret the results with caution, acknowledging the assumption's limitations, or (2) detrend the data to remove linear trends, thereby meeting the stationarity assumption but potentially losing information about the trends themselves.
+
+
+### From wide to long format 
+
+Time series data can be stored in either a *long* or *wide* format. In the long format, each row represents a single observation at a specific time point for a specific individual. This means for a single individual, the datafile contains multiple rows corresponding to the number of assessments. In the wide format, each row represents a single individual or unit, and the columns contain observations for each time point. Some functions require the data to be in a long format, such as the graphicalVAR(), gvar(), mlVAR(), and ml_var() functions, while the panelgvar() function requires the data to be in a wide format. 
+
+[TO DO: add examples]
+
+
+
+
