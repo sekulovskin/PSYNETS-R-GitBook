@@ -28,7 +28,7 @@ Other arguments include:
 
 ### Running an Analysis
 
-To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psychnonetrics** package). The data  contains 271 observations and one general Star Wars question and three question about the prequels, three questions about the original and three question about the sequels.
+To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psychnonetrics** package). This example is taken from http://psychonetrics.org/files/PNAWS2020lecture.html. The data  contain 271 observations and 10 variables: one general Star Wars question, three questions about the prequels, three questions about the original and three questions about the sequels.
 
 
 ```{r message=FALSE, warning=FALSE}
