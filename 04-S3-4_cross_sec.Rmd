@@ -1,12 +1,9 @@
 # Estimating Corsssectional Networks
 
 ## Software Overview
-undirected network models 
-
-
-## Taking bootnet and psychonetrics for a spin 
-
 There are two main R packages to use when estimating (frequentist) network models from cross-sectional data: **bootnet** and **psychonetrics**. 
+
+## Taking bootnet for a spin 
 
 Let's install and load the **bootnet** package:
 ```{r message=FALSE, warning=FALSE}
@@ -73,6 +70,8 @@ There is only one mandatory argument for the `qgraph` function and that is an ad
 ```{r message=FALSE, warning=FALSE}
 plot <- qgraph(network$graph, theme = "colorblind", layout = "spring")
 ```
+
+## Taking psychonetrics for a spin 
 Now we will use the **psychonetrics** package to plot the same network. The psychonetrics procedure to estimating network consists of two steps: (1) Specifying the type of model (e.g., ggm or Ising) and (2) estimating the model with the `runmodel` function. 
 
 ```{r message=FALSE, warning=FALSE}
@@ -96,7 +95,7 @@ We can plot the network again via the qgraph function:
 # Plot:
 plot_psychonetrics <- qgraph(adj_matrix, layout = "spring", theme = "colorblind")
 ```
-
+Let's see if the networks look similar by plotting them next to each other with the same layout. 
 
 ```{r message=FALSE, warning=FALSE}
 # Obtain average layout (function from qgraph)
