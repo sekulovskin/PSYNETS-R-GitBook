@@ -1,5 +1,7 @@
 # Estimating Corsssectional Networks
 
+Network analysis investigates the presence and strength of conditional dependence relationships among a set of variables. In network analysis, these relationships are typically referred to as edges and the variables are referred to as nodes. When analyzing cross-sectional data, the edges reflect individual differences among participants. For instance, a positive edge between fatigue and concentration would suggest that individuals who experience more fatigue are also more likely to report concentration problems, and this relationship cannot be explained by other nodes in the network.
+
 ## Software Overview
 There are two main R packages to use when estimating (frequentist) network models from cross-sectional data: **bootnet** and **psychonetrics**. 
 
@@ -29,7 +31,6 @@ Other arguments include:
 ### Running an Analysis
 
 To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psychnonetrics** package). This example is taken from http://psychonetrics.org/files/PNAWS2020lecture.html. The data  contain 271 observations and 10 variables: one general Star Wars question, three questions about the prequels, three questions about the original and three questions about the sequels.
-
 
 ```{r message=FALSE, warning=FALSE}
 # install.packages("psychonetrics")
