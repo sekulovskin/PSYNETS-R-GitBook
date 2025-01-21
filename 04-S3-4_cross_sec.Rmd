@@ -30,7 +30,7 @@ Other arguments include:
 
 ### Running an Analysis
 
-To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psychnonetrics** package). This example is taken from http://psychonetrics.org/files/PNAWS2020lecture.html. The data  contain 271 observations and 10 variables: one general Star Wars question, three questions about the prequels, three questions about the original and three questions about the sequels.
+To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psychnonetrics** package). This example is taken from http://psychonetrics.org/files/PNAWS2020lecture.html. The data contain 271 observations and 10 variables: one general Star Wars question, three questions about the prequels, three questions about the original movie and three questions about the sequels.
 
 ```{r message=FALSE, warning=FALSE}
 # install.packages("psychonetrics")
@@ -41,10 +41,11 @@ data("StarWars")
 StarWars[,1:11] # taking only the first 11 questions
 ```
 
-When we run the estimateNetwork function we want make sure to save the output of the function in an object. You can call the object whatever you want, but for now we stick with 'network'. See: 
+When we run the estimateNetwork function on our data set we want make sure to save the output of the function in an object. You can call the object whatever you want, but for now we stick with 'network'. We will estimate a GGM or partial correlation network by specifying the default value as "pcor". This will give us an unconstrained network (i.e., no edge selection). See: 
 
 ```{r message=FALSE, warning=FALSE}
 network <- estimateNetwork(data = StarWars, default = "pcor")
+network
 ```
 
 The output that is printed in the R console contains information about (1) the number of nodes, (2) the number of non-zero edges, (3) the mean edge weights. One can get the adjacency matrix (i.e., a matrix containing all the edge weights in the estimated network) by typing the name of the object the network is stored in and adding $graph to it. As is done here: 
@@ -66,7 +67,7 @@ However, if we want more flexibility over plotting options we can also install a
 library(qgraph)
 ```
 
-There is only one mandatory argument for the `qgraph` function and that is an adjancy matrix. For illustration, we will also specify the arguments layout and theme. But for more options on plotting please read the helpfile via ?qgraph. 
+There is only one mandatory argument for the `qgraph` function and that is an adjacency matrix. For illustration, we will also specify the arguments layout and theme. But for more options on plotting please read the helpfile via ?qgraph. 
 
 ```{r message=FALSE, warning=FALSE}
 plot <- qgraph(network$graph, theme = "colorblind", layout = "spring")
@@ -96,7 +97,7 @@ We can plot the network again via the qgraph function:
 # Plot:
 plot_psychonetrics <- qgraph(adj_matrix, layout = "spring", theme = "colorblind")
 ```
-Let's see if the networks look similar by plotting them next to each other with the same layout. 
+Let's see if the networks estimated with bootnet and psychonetrics look similar by plotting them next to each other with the same layout. 
 
 ```{r message=FALSE, warning=FALSE}
 # Obtain average layout (function from qgraph)
