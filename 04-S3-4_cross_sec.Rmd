@@ -1,7 +1,110 @@
 # Estimating Corsssectional Networks
 
-Things to include: 
-* Warning messages vs. error messages 
-* Non-positive definite matrices 
-* Which estimator to use? 
-* Which sample size to take? 
+Network analysis investigates the presence and strength of conditional dependence relationships among a set of variables. In network analysis, these relationships are typically referred to as edges and the variables are referred to as nodes. When analyzing cross-sectional data, the edges reflect individual differences among participants. For instance, a positive edge between fatigue and concentration would suggest that individuals who experience more fatigue are also more likely to report concentration problems, and this relationship cannot be explained by other nodes in the network.
+
+## Software Overview
+There are two main R packages to use when estimating (frequentist) network models from cross-sectional data: **bootnet** and **psychonetrics**. 
+
+## Taking bootnet for a spin 
+
+Let's install and load the **bootnet** package:
+```{r message=FALSE, warning=FALSE}
+# install.packages("bootnet")
+library(bootnet)
+```
+
+The first thing we want to do is familiarize ourselves with the basic functionalities of the package. For this, we strongly recommend reading the helpers file, which can be done via: 
+
+```{r eval=FALSE}
+?bootnet
+```
+
+The main function in **bootnet** used to estimate a network model from data is called `estimateNetwork`. 
+
+There are two mandatory arguments for using the `estimateNetwork` function: (1) the data in a (number of observations) $n \times p$ (number of variables) format, as a data frame or matrix, and (2) the type of network model you want to estimate (e.g., partial correlation network, Ising model, mgm). 
+
+Other arguments include:
+* `corMethod`: This is the correlation that is used. The options are "cor", "cov", "cor_auto", "npn", "spearman". Spearman correlations are suggested when ordinal data is used. Npn can be used when data is skewed, as it first applies nonparanormal transformation to the data via huge.npn, and then computes the correlations. Note that, when this argument is not specified, the first option listed in the helpfile is chosen 
+* `missing`: This specified how missing data should be handled. The options are "pairwise", "listwise", "fiml" and "stop". Pairwise deletion uses all available data when possible and listwise deletion removes rows with any missing data. FIML stands for Full-Information Maximum likelihood. Stop will give an error message when the data contains missing values. 
+* Other important arguments depend on the default network method that was chosen and can be found in the help file.  
+
+### Running an Analysis
+
+To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psychnonetrics** package). This example is taken from http://psychonetrics.org/files/PNAWS2020lecture.html. The data contain 271 observations and 10 variables: one general Star Wars question, three questions about the prequels, three questions about the original movie and three questions about the sequels.
+
+```{r message=FALSE, warning=FALSE}
+# install.packages("psychonetrics")
+library(psychonetrics)
+
+# Load the data:
+data("StarWars")
+StarWars[,1:11] # taking only the first 11 questions
+```
+
+When we run the estimateNetwork function on our data set we want make sure to save the output of the function in an object. You can call the object whatever you want, but for now we stick with 'network'. We will estimate a GGM or partial correlation network by specifying the default value as "pcor". This will give us an unconstrained network (i.e., no edge selection). See: 
+
+```{r message=FALSE, warning=FALSE}
+network <- estimateNetwork(data = StarWars, default = "pcor")
+network
+```
+
+The output that is printed in the R console contains information about (1) the number of nodes, (2) the number of non-zero edges, (3) the mean edge weights. One can get the adjacency matrix (i.e., a matrix containing all the edge weights in the estimated network) by typing the name of the object the network is stored in and adding $graph to it. As is done here: 
+
+```{r message=FALSE, warning=FALSE}
+network$graph
+```
+
+If we want a visual representation of the adjacency matrix, we can  use bootnet's built-in plot function: 
+
+```{r message=FALSE, warning=FALSE}
+plot(network)
+```
+
+However, if we want more flexibility over plotting options we can also install and run the `qgraph` function from the **qgraph** package.
+
+```{r message=FALSE, warning=FALSE}
+# install.packages("qgraph")
+library(qgraph)
+```
+
+There is only one mandatory argument for the `qgraph` function and that is an adjacency matrix. For illustration, we will also specify the arguments layout and theme. But for more options on plotting please read the helpfile via ?qgraph. 
+
+```{r message=FALSE, warning=FALSE}
+plot <- qgraph(network$graph, theme = "colorblind", layout = "spring")
+```
+
+## Taking psychonetrics for a spin 
+Now we will use the **psychonetrics** package to plot the same network. The psychonetrics procedure to estimating network consists of two steps: (1) Specifying the type of model (e.g., ggm or Ising) and (2) estimating the model with the `runmodel` function. 
+
+```{r message=FALSE, warning=FALSE}
+# Form GGM model:
+network_psychonetrics <- ggm(StarWars)
+
+# Run model:
+network_psychonetrics <- runmodel(network_psychonetrics)
+```
+
+After estimating the network, we can obtain the adjacancy matrix via the getmatrix function. 
+
+```{r message=FALSE, warning=FALSE}
+# Obtain network:
+adj_matrix <- getmatrix(network_psychonetrics, "omega")
+```
+
+We can plot the network again via the qgraph function: 
+
+```{r message=FALSE, warning=FALSE}
+# Plot:
+plot_psychonetrics <- qgraph(adj_matrix, layout = "spring", theme = "colorblind")
+```
+Let's see if the networks estimated with bootnet and psychonetrics look similar by plotting them next to each other with the same layout. 
+
+```{r message=FALSE, warning=FALSE}
+# Obtain average layout (function from qgraph)
+Layout <- averageLayout(network, adj_matrix)
+
+# plot both networks:
+layout(t(1:2))
+qgraph(plot, layout = Layout, theme = "colorblind", title = "bootnet")
+qgraph(plot_psychonetrics, layout = Layout, theme = "colorblind", title = "psychonetrics")
+```
