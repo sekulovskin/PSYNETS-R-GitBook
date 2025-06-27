@@ -1,0 +1,834 @@
+--- 
+title: "PSYNETS: R Essentials"
+author: "The PSYNETS Team"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+csl: apa.csl
+---
+
+
+# Introduction
+
+This book is designed for participants of the PSYNETS workshop to help them get acquainted with the basic functionalities of R and the R packages used throughout the sessions. It has been compiled based on the most frequently asked questions and challenges that participants have encountered during previous workshops. While not a comprehensive guide to R for network psychometrics, it serves as a quick reference to help you get started with R and the specific packages used in the workshop. The primary focus is on installing packages, loading data from various formats, and understanding the unique features of each packages covered in the course. Whenever you have a technical question about R, we recommend consulting this book first. 
+
+This book is structured as follows. The next chapter provides a quick overview of R's basic features and functionalities. If you’re already familiar with R, feel free to skip the chapter. The following five chapters correspond to each of the workshop sessions. In these chapters, we demonstrate simple analyses and highlight common challenges when working with the featured packages.
+
+*Please note that this is the first iteration of the workshop in which this material has been introduced, so it is not complete and some errors may be present.*
+
+We hope you enjoy your week in Amsterdam and gain valuable insights into psychological network modeling!
+
+![](PSYNETS_logo.png)
+
+
+
+
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction to R for Absolute Beginners
+
+Welcome to R! This guide is designed to help absolute beginners get started with R, a powerful tool for statistical computing and data visualization. R can seem overwhelming at first, but this introduction will walk you through the basics, step by step. If you are already familiar with R, feel free to skip this section.
+
+## What is R?
+
+R is a programming language and software environment specifically designed for statistical analysis and data visualization. It is widely used by data scientists, statisticians, and researchers.
+
+## Getting Started with R
+
+### Installing R and RStudio
+
+To use R, you will need two things:
+1. **R**: Download and install it from [CRAN](https://cran.r-project.org/).
+2. **RStudio**: A user-friendly interface for R, which you can download from [RStudio's website](https://posit.co/download/rstudio-desktop/).
+
+### RStudio Interface
+
+When you open RStudio, you'll see four main panels:
+- **Source/Script Editor**: Write and save your R code here. To create an R script go to *File -> New File -> R Script*.
+
+- **Console**: Run code directly and see the output.
+
+- **Environment/History**: See your data and objects.
+
+- **Files/Plots/Packages/Help**: Access files (available in your working directory, see below), view plots, manage packages, and get help. you can easily load data sets using this option.
+
+
+## Working Directory
+
+The working directory is the folder where R will look for files. You can set your working directory using the `setwd()` function. Alternatively, you can use the `here` package to set your working directory to the location of your R script. You can also navigate on top of R studio to the session tab and set your working directory from there. Finally you can use the keyboard shortcut `Ctrl + Shift + H` to set your working directory. If you cannot load a certain file (usually a data set), it is likely that your working directory is not set correctly.
+
+
+## Basic Syntax in R
+
+### Running Code
+
+You can run code directly in the console or write it in the script editor and press `Ctrl + Enter` (or `Cmd + Enter` on a Mac) to run it. We always suggest you do the later, that way your code is saved. 
+
+### Basic Calculations
+
+At its simplest, R can be used as a calculator. For example:
+
+```{r, eval=FALSE}
+1 + 1
+5 * 3
+10 / 2
+2^3
+```
+
+### Variables 
+
+You can store values in **variables** or as they sometimes called **objects**. A variable is like a box that holds data.
+
+```{r, eval=FALSE}
+x <- 5
+y <- 10
+sum <- x + y
+sum
+```
+
+### Data Types
+
+R has several basic data types:
+
+- Numeric: Numbers like 42 or 3.14.
+- Character: Text or strings like "Hello".
+- Logical: `TRUE` or `FALSE`.
+
+```{r, eval=FALSE}
+num_var <- 42  # numeric
+char_var <- "Hello!"  # string
+log_var <- TRUE # logical 
+```
+
+
+### Functions
+
+A function is a piece of code that performs a specific task. For example, `sqrt()` calculates the square root:
+
+```{r, eval=FALSE}
+sqrt(16)
+```
+
+There are many in-built functions in R, and you can also create your own functions (however, that is beyond the scope of this book). And of course, as you will see in the other chapters, many of the functionalities you will use come from packages, which can be installed and loaded follows:
+
+```{r, eval=FALSE}
+install.packages("package_name")
+library(package_name)
+```
+
+## Working with Data & Various Data Structures 
+
+### Vectors
+
+A vector is a sequence of data elements of the same basic type. You can create a vector using the `c()` function:
+
+```{r, eval=FALSE}
+my_vector <- c(1, 2, 3, 4, 5)
+my_vector
+```
+
+
+### Matrices
+
+A matrix is a two-dimensional data structure where all elements are of the same type (usually numeric). Unlike a data frame, a matrix does not allow for different types of data (e.g., characters and numbers) in different columns. You can create a matrix using the `matrix()` function:
+
+```{r, eval=TRUE}
+my_matrix <- matrix(
+  data = 1:9,      # The data to fill the matrix
+  nrow = 3,        # Number of rows
+  ncol = 3,        # Number of columns
+  byrow = TRUE     # Fill the matrix by rows
+)
+my_matrix
+```
+
+The concept of a matrix is closely tied to network models, since in practice the estimated network model is a matrix of connections between nodes. Below is an example of constructing a symmetric 5x5 adjacency matrix (i.e., a a graph that shows which nodes are present without carrying information about the strength of the nodes, zeros indicate absent edges and ones present edges) for an undirected graph and visualizing it using the qgraph package:
+
+```{r, warning=FALSE, message=FALSE, eval=TRUE}
+# Create a 5x5 symmetric adjacency matrix
+adj_matrix <- matrix(
+  data = c(0, 1, 1, 0, 1,
+           1, 0, 1, 1, 0,
+           1, 1, 0, 1, 0,
+           0, 1, 1, 0, 1,
+           1, 0, 0, 1, 0),
+  nrow = 5,
+  ncol = 5,
+  byrow = TRUE
+)
+
+# Add row and column names for clarity
+colnames(adj_matrix) <- rownames(adj_matrix) <- c("Node1", "Node2", "Node3", "Node4", "Node5")
+
+# Print the adjacency matrix
+adj_matrix
+
+# Plot the graph using qgraph
+library(qgraph)
+qgraph(adj_matrix, 
+       layout = "spring", 
+       vsize = 8, 
+       labels = colnames(adj_matrix))
+```
+
+Notice that adjacency matrices are a specific use of matrices where symmetry often indicates undirected relationships, and zeros along the diagonal reflect the absence of self-loops.
+
+### Data Frames
+
+A data frame is a table-like data structure (i.e., a spreadsheet) that stores data. You can create a data frame using the `data.frame()` function:
+
+```{r, eval=TRUE}
+my_data <- data.frame(
+  Name = c("A", "B", "C"),
+  Age = c(25, 30, 35),
+  Height = c(175, 182, 168)
+)
+my_data
+```
+
+### Matrix vs. Data Frame
+
+While matrices and data frames might look similar at first glance (both are rectangular), there are key differences:
+
+- Data Frames can store different types of data in each column (e.g., numeric, character, logical).
+
+- Matrices store only one type of data across all elements.
+
+If you convert a matrix to a data frame, it gains the flexibility of mixed data types but may lose some structure if row and column names aren't defined.
+
+
+### Lists
+
+A list in R is a flexible data structure that can hold objects of different types and sizes. Unlike a matrix or data frame, lists are not restricted to a rectangular shape. You can think of a list as a container for various objects, including vectors, matrices, data frames, or even other lists. Usually the results of many of the analyses are stored in lists as they can hold many different types of objects.
+
+Create a list using the `list()` function:
+
+```{r, eval=TRUE}
+my_list <- list(
+  Name = "A",
+  Age = 25,
+  Scores = c(90, 85, 88),
+  Nested = list(a = 1, b = 2)
+)
+my_list
+``` 
+
+
+### Arrays
+
+An array is a multi-dimensional generalization of a matrix. While matrices are limited to two dimensions (rows and columns), arrays can have more dimensions. Arrays store data of the same type, and you can create one using the array() function:
+
+```{r}
+my_array <- array(
+  data = 1:24, 
+  dim = c(4, 3, 2) # 4 rows, 3 columns, 2 layers
+)
+my_array
+```
+
+## Relationship to Lists and Arrays 
+
+- Lists are more flexible than matrices and data frames, as they can store mixed types and structures. 
+
+- Arrays are similar to matrices but can expand into more than two dimensions, making them suitable for complex datasets like 3D models or time-series grids.
+
+## Loading Data into R
+
+R can read data from various file formats, as already mentioned, you can also use the file tab for this. Here are some examples of how this can be done through the console, for some common file formats. Before we start, make sure to set your working directory to the location where your data is stored. 
+
+### Reading a CSV file
+
+```{r, eval=FALSE}
+# Make sure the 'data.csv' file is in your working directory
+my_data <- read.csv("data.csv")
+head(my_data)
+```
+
+### Reading an Excel File
+
+```{r, eval=FALSE}
+# Install the readxl package if you haven't already
+#install.packages("readxl")
+library(readxl)
+
+# Reading an Excel file
+my_data <- read_excel("data.xlsx", sheet = 1)
+head(my_data)
+```
+
+### Reading Data from R's Built-in Datasets
+
+Many R packages come with built-in datasets that you can use to practice. For example, the `mtcars` dataset is built into R:
+
+
+```{r, eval=TRUE}
+# Load the 'mtcars' dataset
+data(mtcars)
+head(mtcars)
+```
+
+## Performing a statistical analysis
+
+R is a powerful tool for statistical analysis. You can perform a wide range of statistical tests and analyses using R. Here is an example of how to perform a simple t-test.
+
+### T-Test
+
+```{r, eval=TRUE}
+# Subset the data into two groups
+auto <- mtcars$mpg[mtcars$am == 0]  # Automatic cars
+manual <- mtcars$mpg[mtcars$am == 1]  # Manual cars
+
+# Perform a t-test
+t_test_result <- t.test(auto, manual)
+t_test_result
+```
+
+
+### Visualizing data
+
+R is also great for data visualization. You can create a wide range of plots and graphs using R. Here is an example of how to create a boxlot. R has in built functions for many types of plots, and you can also use the `ggplot2` package for more advanced plots.
+
+```{r, eval=TRUE}
+boxplot(mpg ~ am, data = mtcars,
+        main = "Miles Per Gallon (mpg) by Transmission Type",
+        xlab = "Transmission (0 = Automatic, 1 = Manual)",
+        ylab = "Miles Per Gallon (mpg)")
+```
+
+
+## Additional Resources
+
+This introduction is just the tip of the iceberg. R is a vast and powerful tool with a steep learning curve. Here are some additional resources to help you continue your journey with R:
+
+- [R for Data Science](https://r4ds.had.co.nz/): A comprehensive guide to data science with R.
+- [RStudio Cheatsheets](https://www.rstudio.com/resources/cheatsheets/): Handy cheatsheets for various R topics.
+- [Stack Overflow](https://stackoverflow.com/): A great place to ask questions and find answers about R.
+- [R Documentation](https://www.rdocumentation.org/): Official documentation for R packages.
+
+
+The second chapter in the book *Network Psychometrics with R* [@NP_with_R_book] also provides a comprehensive introduction to R. 
+
+## Conclusion
+
+Congratulations! You've completed the introduction to R. We hope this guide has given you a solid foundation to start exploring R on your own. In the following chapters, we explore the specific functionalities of the R packages that will be used throughout this workshop. If you have any questions or need further assistance, don't hesitate to ask. Happy "networking"!
+
+
+
+<!--chapter:end:01-intro-to-R.Rmd-->
+
+# Causality, Conditional Dependence, and Pairwise Markov Random Fields
+
+## Overview
+
+This chapter guides you through performing network discovery and causal analysis in R. 
+For more details, please consult the other materials provided for this lecture.
+
+- Load the necessary packages and data.
+- Compute and interpret correlation and partial correlation matrices.
+- Identify significant connections using the SIN algorithm.
+- Visualize results with the `qgraph` package.
+- Apply the `mgm` package for network estimation.
+
+## Setup
+
+Start by loading the required packages:
+
+```{r setup, message=FALSE, warning=FALSE}
+#install.packages("gtools")
+#install.packages("corpcor")
+#install.packages("qgraph")
+#install.packages("mgm")
+#install.packages("igraph")
+#install.packages("RBGL")
+#install.packages("graph")
+#install.packages("pcalg")
+
+library(gtools)
+library(corpcor)
+library(qgraph)
+library(mgm)
+library(igraph)
+library(RBGL)
+library(graph)
+library(pcalg)
+```
+
+## Loading the Data
+
+We will use a simulated dataset for this analysis. 
+
+```{r load-data}
+# Simulating correlated data using a multivariate normal distribution
+library(MASS)
+
+# Define the mean vector and covariance matrix
+mu <- rep(0, 5) # Mean of 0 for each variable
+Sigma <- matrix(0.5, nrow = 5, ncol = 5) # 0.5 correlation between variables
+diag(Sigma) <- 1 # Variance of 1 for each variable
+
+# Simulate 100 observations
+set.seed(123) # For reproducibility
+data <- as.data.frame(mvrnorm(n = 100, mu = mu, Sigma = Sigma))
+names(data) <- paste0("V", 1:5) # Naming the variables
+
+```
+
+
+## Correlation and Partial Correlation
+
+### Correlation Matrix
+
+Compute the correlation matrix of the dataset:
+
+```{r correlation}
+data.cor <- cor(data)
+print(data.cor)
+```
+
+### Partial Correlation Matrix
+
+Convert the correlation matrix to a partial correlation matrix:
+
+```{r partial-correlation}
+data.pcor <- cor2pcor(data.cor)
+print(data.pcor)
+```
+
+
+## Identifying Significant Connections
+
+
+We can use a method called SIN (Significant, Intermediate, Non-significant, @pearl1995), to test which partial correlations are significantly different from zero. For that you can use the following function:
+
+```{r}
+sin.ag <-
+function (pcor, n, plot = TRUE, alpha = 0.1, beta = 0.5) 
+{
+    p <- dim(pcor)[2]
+	pval.pcor <- function(pcor, n){
+		pcor.unic <- pcor[lower.tri(pcor, diag=FALSE)]
+		z <- 0.5*log((1+pcor.unic)/(1-pcor.unic))
+		pval <- 2*(1-pnorm(sqrt(n-3)*abs(z)))
+		return(p.adjust(pval, method="holm"))
+	}   
+	sin.lt <- pval.pcor(pcor, n)
+	sin.amat <- matrix(0,ncol=p,nrow=p)
+	sin.amat[lower.tri(sin.amat)] <- sin.lt
+	sin.amat <- sin.amat + t(sin.amat)
+	sin.p <- sin.amat
+	sin.amat[sin.p < 0.1] <- 1
+	sin.amat[sin.p >= 0.1] <- 0
+	diag(sin.amat) <- 0
+	if (plot) {
+    	connect <- combinations(p, 2)
+    	lc <- dim(connect)[1]
+    	make.name <- function(a) paste(a[1],paste("-",a[2],sep=""),sep="")
+    	leg <- apply(connect,1,make.name)
+        plot(sin.lt, pch = 16, bty = "n", axes = FALSE, xlab = "edge", 
+            ylab = "P-value")
+        axis(1, at = 1:lc, labels = leg, las = 2)
+        axis(2, at = c(0.2, 0.4, 0.6, 0.8, 1), labels = TRUE)
+        lines(c(1, lc), c(alpha, alpha), col = "gray")
+        lines(c(1, lc), c(beta, beta), col = "gray")
+        name <- deparse(substitute(data))
+        title(main = paste(attr(data, "cond")), font.main = 1)
+        text(1,0.15,"0.1",col="gray")
+        text(1,0.55,"0.5",col="gray")        
+    }
+    names(sin.lt) <- leg
+    invisible(list(pval=sin.lt,amat=sin.amat))
+}
+```
+
+
+```{r sin-algorithm}
+sin <- sin.ag(data.pcor,n=100)
+sin
+```
+
+
+## Visualizing the Network
+
+We can visualize the significant connections using `qgraph`:
+
+```{r visualize-network}
+qgraph(sin$amat)
+```
+
+## Network Estimation with MGM
+
+Estimate a graphical model using the `mgm` package. For this the data needs to be saved as a matrix.
+
+```{r mgm-analysis, message=FALSE, warning=FALSE}
+fit <- mgm(as.matrix(data), type = rep("g", 5), lambdaSeq = 0, lambdaSel = "EBIC")
+```
+
+
+
+## Summary
+
+This tutorial demonstrated how to:
+
+- Compute and interpret correlation and partial correlation matrices.
+- Identify significant connections using statistical tests.
+- Visualize the network structure.
+- Estimate a network model with the `mgm` package.
+
+Explore further by doing the practical! 
+
+<!--chapter:end:03-S2_causality.Rmd-->
+
+# Estimating Corsssectional Networks
+
+Network analysis investigates the presence and strength of conditional dependence relationships among a set of variables. In network analysis, these relationships are typically referred to as edges and the variables are referred to as nodes. When analyzing cross-sectional data, the edges reflect individual differences among participants. For instance, a positive edge between fatigue and concentration would suggest that individuals who experience more fatigue are also more likely to report concentration problems, and this relationship cannot be explained by other nodes in the network.
+
+## Software Overview
+There are two main R packages to use when estimating (frequentist) network models from cross-sectional data: **bootnet** and **psychonetrics**. 
+
+## Taking bootnet for a spin 
+
+Let's install and load the **bootnet** package:
+```{r message=FALSE, warning=FALSE}
+# install.packages("bootnet")
+library(bootnet)
+```
+
+The first thing we want to do is familiarize ourselves with the basic functionalities of the package. For this, we strongly recommend reading the helpers file, which can be done via: 
+
+```{r eval=FALSE}
+?bootnet
+```
+
+The main function in **bootnet** used to estimate a network model from data is called `estimateNetwork`. 
+
+There are two mandatory arguments for using the `estimateNetwork` function: (1) the data in a (number of observations) $n \times p$ (number of variables) format, as a data frame or matrix, and (2) the type of network model you want to estimate (e.g., partial correlation network, Ising model, mgm). 
+
+Other arguments include:
+
+-  `corMethod`: This is the correlation that is used. The options are "cor", "cov", "cor_auto", "npn", "spearman". Spearman correlations are suggested when ordinal data is used. Npn can be used when data is skewed, as it first applies nonparanormal transformation to the data via huge.npn, and then computes the correlations. Note that, when this argument is not specified, the first option listed in the helpfile is chosen.
+
+- `missing`: This specified how missing data should be handled. The options are "pairwise", "listwise", "fiml" and "stop". Pairwise deletion uses all available data when possible and listwise deletion removes rows with any missing data. FIML stands for Full-Information Maximum likelihood. Stop will give an error message when the data contains missing values. 
+
+- Other important arguments depend on the default network method that was chosen and can be found in the help file.  
+
+### Running an Analysis
+
+To demonstrate how to use the `estiamteNetwork` function from the **bootnet** package, we will use the first 10 questions from the StarWars dataset (part of the **psycohnetrics** package). This example is taken from http://psychonetrics.org/files/PNAWS2020lecture.html. The data contain 271 observations and 10 variables: one general Star Wars question, three questions about the prequels, three questions about the original movie and three questions about the sequels.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# install.packages("psychonetrics")
+library(psychonetrics)
+
+# Load the data:
+data("StarWars")
+# glimpse the first 5 rows and 11 variables
+StarWars[1:5,1:11]
+```
+
+When we run the estimateNetwork function on our data set we want make sure to save the output of the function in an object. You can call the object whatever you want, but for now we stick with 'network'. We will estimate a GGM or partial correlation network by specifying the default value as "pcor". This will give us an unconstrained network (i.e., no edge selection). See: 
+
+```{r message=FALSE, warning=FALSE}
+network <- estimateNetwork(data = StarWars, default = "pcor")
+network
+```
+
+The output that is printed in the R console contains information about (1) the number of nodes, (2) the number of non-zero edges, (3) the mean edge weights. One can get the adjacency matrix (i.e., a matrix containing all the edge weights in the estimated network) by typing the name of the object the network is stored in and adding $graph to it. As is done here: 
+
+```{r message=FALSE, warning=FALSE}
+network$graph
+```
+
+If we want a visual representation of the adjacency matrix, we can  use bootnet's built-in plot function: 
+
+```{r message=FALSE, warning=FALSE}
+plot(network)
+```
+
+However, if we want more flexibility over plotting options we can also install and run the `qgraph` function from the **qgraph** package.
+
+```{r message=FALSE, warning=FALSE}
+# install.packages("qgraph")
+library(qgraph)
+```
+
+There is only one mandatory argument for the `qgraph` function and that is an adjacency matrix. For illustration, we will also specify the arguments layout and theme. But for more options on plotting please read the helpfile via ?qgraph. 
+
+```{r message=FALSE, warning=FALSE}
+plot <- qgraph(network$graph, theme = "colorblind", layout = "spring")
+```
+
+## Taking psychonetrics for a spin 
+Now we will use the **psychonetrics** package to plot the same network. The psychonetrics procedure to estimating network consists of two steps: (1) Specifying the type of model (e.g., ggm or Ising) and (2) estimating the model with the `runmodel` function. 
+
+```{r message=FALSE, warning=FALSE}
+# Form GGM model:
+network_psychonetrics <- ggm(StarWars)
+
+# Run model:
+network_psychonetrics <- runmodel(network_psychonetrics)
+```
+
+After estimating the network, we can obtain the adjacancy matrix via the getmatrix function. 
+
+```{r message=FALSE, warning=FALSE}
+# Obtain network:
+adj_matrix <- getmatrix(network_psychonetrics, "omega")
+```
+
+We can plot the network again via the qgraph function: 
+
+```{r message=FALSE, warning=FALSE}
+# Plot:
+plot_psychonetrics <- qgraph(adj_matrix, layout = "spring", theme = "colorblind")
+```
+Let's see if the networks estimated with bootnet and psychonetrics look similar by plotting them next to each other with the same layout. 
+
+```{r message=FALSE, warning=FALSE}
+# Obtain average layout (function from qgraph)
+Layout <- averageLayout(network, adj_matrix)
+
+# plot both networks:
+layout(t(1:2))
+qgraph(plot, layout = Layout, theme = "colorblind", title = "bootnet")
+qgraph(plot_psychonetrics, layout = Layout, theme = "colorblind", title = "psychonetrics")
+```
+
+<!--chapter:end:04-S3-4_cross_sec.Rmd-->
+
+# Network Estimation from Time Series Data
+
+## Network Estimation from Time Series Data in a Nutshell
+
+**Note:** *Please note that this chapter is not complete; please refer to the lecture notes for more information.*
+
+Time series data involve repeated measurements over time for one or more individuals, and, within the realm of network analysis, contains multiple variables. This data is often collected through self-report methods, such as smartphone surveys, or through real-time trackers. Time series data differ from other common data types in psychology, such as cross-sectional data, which are collected at a single time point from multiple individuals.
+
+Within time series data, we can distinguish between intensive longitudinal data for a single individual (N = 1), panel data (repeated measures across multiple individuals), and intensive longitudinal data for multiple individuals (N > 1).
+
+A key characteristic of time series data is *temporal dependence*, meaning that the data points are dependent over time. This sequential structure necessitates specialized analysis techniques that account for this temporal dependency in the data. These techniques. These techniques enable us to model the temporal patterns in our data and gain insights into the dynamic relationships between variables, such as how one variable influences another over time, how processes evolve, and potential mechanisms (e.g., through Granger causality).
+
+## Software Overview
+
+In this workshop we mainly focus on the following three R packages the estimate network models from time series data: **graphicalVAR** for ordinal longitudinal data for one individual, **mlVAR** for ordinal longitudinal data for multiple individuals and **psychonetrics**, for ordinal panel data as well as for ordinal longitudinal data for one individual or multiple individuals. This chapter introduces the core functionalities of these packages through a simple example. For more advanced time series modeling such as for time series data containing binary and ordinal data or we refer to the packages xx xx and Chapter xx.
+
+
+### Missing data
+
+As longitudinal time series data require multiple measurements from the same individual over an extended period, missing values are a common challenge. There are many potential reasons for missing data, and the literature distingsuishes between different types of missingness.
+
+If data are missing entirely at random, meaning the missingness is unrelated to any observed or unobserved variable, it is referred to as missing completely at random (MCAR). MCAR is the least problematic form of missingness as it does not introduce any bias. However, missingness may also follow a pattern. When the probability of data missing depends only on observed data and not on the missing data themselves, it is referred to as missing at random (MAR). Finally, if the probability of the data missing depends on the value of the missing data itself, even after accounting for observed data, this is referred to as  missing not at random (MNAR)
+
+ In addition, data could be missing not at random (MNAR). The probability of a data point being missing depends on the value of the missing data itself, even after accounting for observed data.
+
+Broadly, three approaches can be used to address the issue of missing data: (1) listwise deletion, (2) imputation, or (3) models that account for missing data directly can be employed. Although by no means a full account, in the following sections we will explore some examples of each of these solutions. 
+
+#### listwise deletion of missing data
+
+Listwise deletion means that missing data are handled by removing rows form the dataset. For example, if a response is missing at time t, the rows corresponding to $t-1$ and out of $t+1$ are removed. Thus, listwise deletion results in more data being excluded than just the missing value. This can greatly reduce the effective sample size, especially in datasets with many missing values, potentially leading to reduced statistical power and biased results. Common functions to estimate network models from time-series data such as **graphicalVAR** and **mlVAR** make use of listwise deletion.
+
+
+#### Data imputation 
+
+One way to address missing data is through data imputation, where missing values are estimated and filled in using various techniques. Missing data could be imputated using simple imputation methods (e.g., mean or median imputation) or more advanced techniques such as by using a Kalman filter, which is especially useful for time-series data.
+
+Mean or median imputation is a straightforward way to handle missing data. It works by replacing missing values with the mean (average) or median (middle value) of the observed data for a variable. While simple, this method has some limitations, such as potentially underestimating variability in the dataset. While this method is simple, it assumes that the missing data are MCAR and doesn’t consider temporal relationships or trends in the data.
+
+The Kalman filter is a more sophisticated imputation method, ideal for time-series data where the relationship between values over time is important. It combines predictions from a system model with observed data to estimate missing values dynamically. Imputing missing values through the use of a Kalman filter has been implemented in the na_kalman() function from the R package **imputeTS**. To make use of this function first install and load the **imputeTS** package. 
+
+
+```{r message=FALSE, warning=FALSE}
+# Install package: 
+# install.packages("imputeTS")
+
+# Load library:
+library(imputeTS)
+```
+
+The package comes with an examplary dataset containing missing values called the "tsAirgap" dataset. To impute missing values using a kalman filter we can make use of the na_kalman() function as follows: 
+
+```{r message=FALSE, warning=FALSE}
+# Check data:
+tsAirgap
+
+# Impute missing values using a Kalman filter: 
+tsAirgap <- na_kalman(tsAirgap)
+
+# Check imputation results
+tsAirgap
+```
+
+
+#### Models that account for missing data
+
+Full Information Maximum Likelihood estimation (FIML) is a powerful estimation technique that can handle missing data effectively. Unlike approaches such as listwise deletion, FIML makes use of all available data in the dataset in order to estimate the model. Instead of imputing missing values FIML estimates parameters directly by maximizing the likelihood of the observed data given the specified network model. As FIML uses all available information, it generally provides more accurate parameter estimates and retains statistical power compared to methods that discard incomplete cases. The **psychonetrics** package in R implements FIML for the estimation of psychological networks based on time-series data through the **estimator** argument within the gvar(), panelgvar(), ml_var() functions. When one wants to make use of FIML estimation within these functions, you specify the estimator function as **estimator = "FIML"**.  
+
+### Stationarity
+
+Stationarity means that the statistical properties of the data (e.g., mean, variance, autocorrelation) do not change over time. Many network models, require the time series data to be stationary. Violations in the assumption of stationarity arise if there are trends in the data such as linear or seasonal trends. You can test for trend stationarity in time-series data using the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test through the kpss.test() function from the **tseries** package in R. This function test the null hypothesis that the data is trend stationary.  
+
+```{r message=FALSE, warning=FALSE}
+# Install package: 
+# install.packages("tseries")
+
+# Load library:
+library(tseries)
+```
+
+```{r message=FALSE, warning=FALSE}
+# Generate a 100 values from a normal distributions:
+x <- rnorm(1000)
+
+# Test if variable is stationary 
+kpss.test(x, null = "Trend")
+```
+
+Alternatively, we can fit a linear regression model using time as a predictor. If time significantly predicts the variable of interest, it indicates a linear trend in the data. To remove this trend (detrend the data), we can use the residuals from the fitted linear model, which represent the variability in the data that is not explained by time. These residuals can then be used as the basis for further data estimation.
+
+A violation of the stationarity assumption is plausible in psychological time series data. For example, we may observe shifts in the mean of affect following significant life events or treatments. Interestingly, these very trends are often the phenomena we aim to model. In such cases, removing these trends through detrending might obscure meaningful patterns and could be counterproductive. Instead, these changes can be explicitly modeled using a time-varying network model, see Chapter XX. However, not all datasets are suitable for estimating time-varying network models due to limitations such as sample size. When explicit modeling of time-varying trends is not feasible, we have two options: (1) accept the violation of stationarity and interpret the results with caution, acknowledging the assumption's limitations, or (2) detrend the data to remove linear trends, thereby meeting the stationarity assumption but potentially losing information about the trends themselves.
+
+
+### From wide to long format 
+
+Time series data can be stored in either a *long* or *wide* format. In the long format, each row represents a single observation at a specific time point for a specific individual. This means for a single individual, the datafile contains multiple rows corresponding to the number of assessments. In the wide format, each row represents a single individual or unit, and the columns contain observations for each time point. Some functions require the data to be in a long format, such as the graphicalVAR(), gvar(), mlVAR(), and ml_var() functions, while the panelgvar() function requires the data to be in a wide format. 
+
+<!--chapter:end:05-S5-6_time_series.Rmd-->
+
+# Advanced Network Estimation
+
+**There is currently no content for this chapter, so please refer to the course materials provided in the Dropbox as well as the booklet.**
+
+<!--chapter:end:06-S7_advanced.Rmd-->
+
+# Bayesian Analysis of Networks 
+
+## Bayesian Graphical Modeling in a Nutshell
+
+The Bayesian approach to network analysis, called Bayesian graphical modeling, allows us to update our beliefs about the plausibility of particular network structures and network parameter values using the data at hand. In other words, we can learn from our data. Before we can do this, however, we must specify what we know, expect, or believe about the network structure and parameter values in prior probability distributions. These prior probability distributions express the relative plausibility of one structure over another, and one parameter value over another, before we have seen the data. They can be based on theory, on results from previous research, or, as we will do here, we use certain default choices in existing software that have favorable statistical properties. 
+
+Bayes' rule, the famous result you probably know from probability theory, uses the data to update these prior distributions to posterior distributions. It uses the likelihood (the network or graphical model such as a GGM) to evaluate the predictive adequacy of network structures and parameter values. Values that predicted the data well receive an uptick in plausibility while values that predicted the data poorly suffer a decline. The posterior distribution then expresses how much more plausible one particular structure is over another based on the data we have, and as such allows us to express the uncertainty we have that a particular network structure produced the data at hand. 
+
+The Bayesian approach allows us to express the uncertainty we have about whether or not a particular edge is included in the data-generating model in terms of the posterior probability of its inclusion.  We can use this posterior probability to test hypotheses about the presence *or* absence of certain network relations by quantifying the evidence in the data for the two competing hypotheses, which is not possible with a frequentist framework. Note that this is a test of the conditional independence of a pair of variables in the network.
+
+For an accessible introduction to the Bayesian framework specifically for psychology and behavioral science, see @WagenmakersEtAL_2018_BIP1 or @vandeSchootEtAl_2014_GentleIntro. For a gentle introduction to Bayesian graphical modeling, see @HuthEtAl_2023; and for a more detailed discussion of testing for conditional (in)dependence in Bayesian graphical models, see @Sekulovski_2.
+
+## Software Overview
+
+Three R packages facilitate the Bayesian analysis of graphical models: **bgms** [@bgms] for binary and ordinal data, as well as **BDgraph** [@bdgraph], and **BGGM** [@BGGM],  which handle Gaussian graphical models and Gaussian copula models [the latter allow for the analysis of non-continuous data @DobraLenkoski_2011]. In this workshop, we will focus on the **easybgm** package, which integrates **bgms**, **BDgraph**, and **BGGM** in a user-friendly manner. This chapter introduces the core functionalities of **easybgm** through a simple example. For more comprehensive information, see the software paper [@easybgm].
+
+The R package **BDgraph** is also implemented in the open-source software JASP [@JASP], which is a user-friendly alternative for those who prefer a point and click graphical user interface. Soon, all the functionalities of the **easybgm** package will also be available in JASP. 
+
+## Taking easybgm for a Spin 
+
+Before illustrating how to perform an analysis using the **easybgm** package, a word of caution: to avoid possible installation problems, please make sure you have the latest version of R installed. As of January 2025, the latest version of R is [4.4.2](https://cran.rstudio.com/).
+
+With that out of the way, we will now briefly discuss some of the main features of the package before illustrating them with an example analysis.
+
+Let's install and load the package:
+```{r message=FALSE, warning=FALSE}
+# install.packages("easybgm")
+library(easybgm)
+```
+
+The first thing we want to do is familiarize ourselves with the basic functionalities of the package. For this, we strongly recommend reading @easybgm.
+
+The main function used to analyze the data is also conveniently called `easybgm`:
+```{r eval=FALSE}
+?easybgm
+```
+
+As shown in the function's help file, the two mandatory arguments required by the function are: (1) the data in a (number of observations) $n \times p$ (number of variables) format, as a data frame or matrix structure, and (2) the level of measurement of the variables in the data set, which can be set to `continuous`, `mixed`, `ordinal`, or `binary`. Based on the latter argument, the package automatically selects one of the three underlying packages for analysis. Specifically, if the `type` argument is set to `continuous` or `mixed`, the `BGGM` package is used by default; If set to `ordinal` or `binary`, the `bgms` package is used. However, these default options can be overwritten using the optional `package` argument. In the case where the `type` argument is set to `mixed`, the `not_cont` argument must also be passed, which takes a vector of length $p$ of numbers indicating which variables in the data set are not continuous (1 for not continuous, 0 for continuous). 
+
+The `save` argument can be set to `TRUE` if users wish to save samples from each iteration of the analysis, which is necessary to obtain credible intervals for the edge weight parameters (by default, this argument is set to `FALSE`). Additionally, the `centrality` argument calculates the strength centrality measure for each node. Finally, the `iter` argument sets the number of iterations for the analysis (defaults to 10,000). For the final analysis, we strongly recommend running the analysis with at least 100,000 iterations [cf., @easybgm]. We highly encourage users to read the package documentation carefully, especially the details on specifying prior distributions for the three underlying packages.
+
+Other important functions include:
+
+- `plot_edgeevidence`: Plots the network with edges color-coded according to the results of the inclusion Bayes factor - blue for evidence of inclusion, red for evidence of exclusion, and gray for inconclusive evidence. The `evidence_thresh` argument specifies the cutoff value for the inclusion Bayes factor, and the `split` argument divides the edge evidence plot at $\text{BF}_{10} = 1$.
+
+- `plot_network`: Plots the network with the estimated parameters. By default, it includes all edges for which the posterior inclusion probability exceeds 0.5 (or which have a inclusion Bayes factor larger than 1). Users can change this default value with the  the `exc_prob` argument. 
+
+- `plot_parameterHDI`: Displays posterior estimates of edge weights with their 95% highest density intervals (HDIs).
+
+- `plot_centrality`: Plots strength centrality measures with a 95% credible interval.
+
+- `plot_structure_probabilities`: Visualizes the posterior distribution of structure probabilities for all simulated structures. When the `as_BF` argument is set to `TRUE`, the plot shows the Bayes factor of the most likely structure against all other structures.
+
+- `plot_complexity_probabilities`: Shows posterior probabilities of structures with different numbers of included edges (complexity simply denotes the number of present edges in a network, which can range from 0 to $p\times(p-1)/2$.
+
+- `plot_structure`: Plots the structure with edges having a Bayes factor larger than 1.
+
+### Running an Analysis
+
+To demonstrate how to use **easybgm** We will use the first 5 variables fron the`Wenchuan` data set, which contains 362 observations on 17 ordinal items measuring symptoms of posttraumatic stress disorder [@McNallyEtAl_2015]. The data is openly available in the package **bgms**. 
+```{r, cache=TRUE, warning=FALSE}
+library(bgms)
+fit <- easybgm(Wenchuan[, 1:5], 
+                type = "ordinal", 
+                save = TRUE, 
+                centrality = TRUE)
+```
+
+The first step after estimating the model is to explore the results using the `summary` function. This provides a clear overview, including details about the package used, the number of variables, and the data type. A table of edge-specific information is the second part of the summary and includes:
+
+- The posterior parameter estimate,
+- The posterior inclusion probability,
+- The inclusion Bayes factor, and
+- The classification of the edge as included, excluded, or inconclusive, depending on the cutoff for the Bayes factor.
+
+This function also displays an edge overview, showing how many edges were found to have evidence for inclusion, exclusion, or insufficient evidence. Finally, if the **bgms** or **BDgraph** packages were used to perform the analysis, an additional structure overview is shown (only available if `save = TRUE` in the `easybgm` function), showing the number of  visited structures, the number of possible structures (which is simply $2^{p\times(p-1)/2}$), and the posterior probability of the most likely structure.
+```{r}
+summary(fit)
+```
+
+We can use the `fit` object as an argument in all the other functions.
+
+The edge evidence plot:
+```{r}
+plot_edgeevidence(fit)
+```
+
+The plot for the estimated edge weights:
+```{r}
+plot_network(fit)
+```
+
+The HDI plot for all edge weights (Note we set the argument `save = TRUE`):
+```{r, cache=TRUE, warning=FALSE}
+plot_parameterHDI(fit)
+```
+
+
+The centrality plot:
+```{r}
+plot_centrality(fit)
+```
+
+The three different structure plots:
+```{r}
+plot_structure_probabilities(fit)
+plot_complexity_probabilities(fit)
+plot_structure(fit)
+```
+
+## JASP 
+
+As already mentioned in the introduction, the **BDgraph** package is also implemented in the open-source point-and-click software JASP. JASP can be easily installed from the [JASP website](https://jasp-stats.org/).
+
+This software provides a user-friendly interface for Bayesian graphical modeling, which is especially useful for those who prefer a graphical user interface. The functionalities of the **easybgm** package will soon be available in JASP as well in the coming months. Below is a screenshot of the JASP interface for Bayesian graphical modeling.
+
+
+![A screenshot of the Bayesian Network Analysis module in JASP](JASP.png)
+
+# References 
+
+
+
+
+
+
+<!--chapter:end:07-S8_bayesian.Rmd-->
+
