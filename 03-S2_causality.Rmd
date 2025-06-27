@@ -1,3 +1,159 @@
 # Causality, Conditional Dependence, and Pairwise Markov Random Fields
 
-**There is currently no content for this chapter, so please refer to the course materials provided in the Dropbox as well as the booklet.**
+## Overview
+
+This chapter guides you through performing network discovery and causal analysis in R. 
+For more details, please consult the other materials provided for this lecture.
+
+- Load the necessary packages and data.
+- Compute and interpret correlation and partial correlation matrices.
+- Identify significant connections using the SIN algorithm.
+- Visualize results with the `qgraph` package.
+- Apply the `mgm` package for network estimation.
+
+## Setup
+
+Start by loading the required packages:
+
+```{r setup, message=FALSE, warning=FALSE}
+#install.packages("gtools")
+#install.packages("corpcor")
+#install.packages("qgraph")
+#install.packages("mgm")
+#install.packages("igraph")
+#install.packages("RBGL")
+#install.packages("graph")
+#install.packages("pcalg")
+
+library(gtools)
+library(corpcor)
+library(qgraph)
+library(mgm)
+library(igraph)
+library(RBGL)
+library(graph)
+library(pcalg)
+```
+
+## Loading the Data
+
+We will use a simulated dataset for this analysis. 
+
+```{r load-data}
+# Simulating correlated data using a multivariate normal distribution
+library(MASS)
+
+# Define the mean vector and covariance matrix
+mu <- rep(0, 5) # Mean of 0 for each variable
+Sigma <- matrix(0.5, nrow = 5, ncol = 5) # 0.5 correlation between variables
+diag(Sigma) <- 1 # Variance of 1 for each variable
+
+# Simulate 100 observations
+set.seed(123) # For reproducibility
+data <- as.data.frame(mvrnorm(n = 100, mu = mu, Sigma = Sigma))
+names(data) <- paste0("V", 1:5) # Naming the variables
+
+```
+
+
+## Correlation and Partial Correlation
+
+### Correlation Matrix
+
+Compute the correlation matrix of the dataset:
+
+```{r correlation}
+data.cor <- cor(data)
+print(data.cor)
+```
+
+### Partial Correlation Matrix
+
+Convert the correlation matrix to a partial correlation matrix:
+
+```{r partial-correlation}
+data.pcor <- cor2pcor(data.cor)
+print(data.pcor)
+```
+
+
+## Identifying Significant Connections
+
+
+We can use a method called SIN (Significant, Intermediate, Non-significant, @pearl1995), to test which partial correlations are significantly different from zero. For that you can use the following function:
+
+```{r}
+sin.ag <-
+function (pcor, n, plot = TRUE, alpha = 0.1, beta = 0.5) 
+{
+    p <- dim(pcor)[2]
+	pval.pcor <- function(pcor, n){
+		pcor.unic <- pcor[lower.tri(pcor, diag=FALSE)]
+		z <- 0.5*log((1+pcor.unic)/(1-pcor.unic))
+		pval <- 2*(1-pnorm(sqrt(n-3)*abs(z)))
+		return(p.adjust(pval, method="holm"))
+	}   
+	sin.lt <- pval.pcor(pcor, n)
+	sin.amat <- matrix(0,ncol=p,nrow=p)
+	sin.amat[lower.tri(sin.amat)] <- sin.lt
+	sin.amat <- sin.amat + t(sin.amat)
+	sin.p <- sin.amat
+	sin.amat[sin.p < 0.1] <- 1
+	sin.amat[sin.p >= 0.1] <- 0
+	diag(sin.amat) <- 0
+	if (plot) {
+    	connect <- combinations(p, 2)
+    	lc <- dim(connect)[1]
+    	make.name <- function(a) paste(a[1],paste("-",a[2],sep=""),sep="")
+    	leg <- apply(connect,1,make.name)
+        plot(sin.lt, pch = 16, bty = "n", axes = FALSE, xlab = "edge", 
+            ylab = "P-value")
+        axis(1, at = 1:lc, labels = leg, las = 2)
+        axis(2, at = c(0.2, 0.4, 0.6, 0.8, 1), labels = TRUE)
+        lines(c(1, lc), c(alpha, alpha), col = "gray")
+        lines(c(1, lc), c(beta, beta), col = "gray")
+        name <- deparse(substitute(data))
+        title(main = paste(attr(data, "cond")), font.main = 1)
+        text(1,0.15,"0.1",col="gray")
+        text(1,0.55,"0.5",col="gray")        
+    }
+    names(sin.lt) <- leg
+    invisible(list(pval=sin.lt,amat=sin.amat))
+}
+```
+
+
+```{r sin-algorithm}
+sin <- sin.ag(data.pcor,n=100)
+sin
+```
+
+
+## Visualizing the Network
+
+We can visualize the significant connections using `qgraph`:
+
+```{r visualize-network}
+qgraph(sin$amat)
+```
+
+## Network Estimation with MGM
+
+Estimate a graphical model using the `mgm` package. For this the data needs to be saved as a matrix.
+
+```{r mgm-analysis, message=FALSE, warning=FALSE}
+fit <- mgm(as.matrix(data), type = rep("g", 5), lambdaSeq = 0, lambdaSel = "EBIC")
+```
+
+
+
+## Summary
+
+This tutorial demonstrated how to:
+
+- Compute and interpret correlation and partial correlation matrices.
+- Identify significant connections using statistical tests.
+- Visualize the network structure.
+- Estimate a network model with the `mgm` package.
+
+Explore further by doing the practical! 

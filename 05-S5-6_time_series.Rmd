@@ -2,6 +2,8 @@
 
 ## Network Estimation from Time Series Data in a Nutshell
 
+**Note:** *Please note that this chapter is not complete; please refer to the lecture notes for more information.*
+
 Time series data involve repeated measurements over time for one or more individuals, and, within the realm of network analysis, contains multiple variables. This data is often collected through self-report methods, such as smartphone surveys, or through real-time trackers. Time series data differ from other common data types in psychology, such as cross-sectional data, which are collected at a single time point from multiple individuals.
 
 Within time series data, we can distinguish between intensive longitudinal data for a single individual (N = 1), panel data (repeated measures across multiple individuals), and intensive longitudinal data for multiple individuals (N > 1).
@@ -12,27 +14,6 @@ A key characteristic of time series data is *temporal dependence*, meaning that 
 
 In this workshop we mainly focus on the following three R packages the estimate network models from time series data: **graphicalVAR** for ordinal longitudinal data for one individual, **mlVAR** for ordinal longitudinal data for multiple individuals and **psychonetrics**, for ordinal panel data as well as for ordinal longitudinal data for one individual or multiple individuals. This chapter introduces the core functionalities of these packages through a simple example. For more advanced time series modeling such as for time series data containing binary and ordinal data or we refer to the packages xx xx and Chapter xx.
 
-## N = 1
-
-### Graphical VAR
-
-[TO DO: add example code]
-
-### psychonetrics
-
-[TO DO: add example code]
-
-## N > 1
-
-### Multilevel VAR
-
-[TO DO: add example code]
-
-### panel VAR
-
-[TO DO: add example code]
-
-##  Common issues with time-series data
 
 ### Missing data
 
@@ -106,14 +87,9 @@ kpss.test(x, null = "Trend")
 
 Alternatively, we can fit a linear regression model using time as a predictor. If time significantly predicts the variable of interest, it indicates a linear trend in the data. To remove this trend (detrend the data), we can use the residuals from the fitted linear model, which represent the variability in the data that is not explained by time. These residuals can then be used as the basis for further data estimation.
 
-[TO DO: add example code]
-
-
 A violation of the stationarity assumption is plausible in psychological time series data. For example, we may observe shifts in the mean of affect following significant life events or treatments. Interestingly, these very trends are often the phenomena we aim to model. In such cases, removing these trends through detrending might obscure meaningful patterns and could be counterproductive. Instead, these changes can be explicitly modeled using a time-varying network model, see Chapter XX. However, not all datasets are suitable for estimating time-varying network models due to limitations such as sample size. When explicit modeling of time-varying trends is not feasible, we have two options: (1) accept the violation of stationarity and interpret the results with caution, acknowledging the assumption's limitations, or (2) detrend the data to remove linear trends, thereby meeting the stationarity assumption but potentially losing information about the trends themselves.
 
 
 ### From wide to long format 
 
 Time series data can be stored in either a *long* or *wide* format. In the long format, each row represents a single observation at a specific time point for a specific individual. This means for a single individual, the datafile contains multiple rows corresponding to the number of assessments. In the wide format, each row represents a single individual or unit, and the columns contain observations for each time point. Some functions require the data to be in a long format, such as the graphicalVAR(), gvar(), mlVAR(), and ml_var() functions, while the panelgvar() function requires the data to be in a wide format. 
-
-[TO DO: add examples]

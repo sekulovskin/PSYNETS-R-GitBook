@@ -24,9 +24,12 @@ The main function in **bootnet** used to estimate a network model from data is c
 There are two mandatory arguments for using the `estimateNetwork` function: (1) the data in a (number of observations) $n \times p$ (number of variables) format, as a data frame or matrix, and (2) the type of network model you want to estimate (e.g., partial correlation network, Ising model, mgm). 
 
 Other arguments include:
-* `corMethod`: This is the correlation that is used. The options are "cor", "cov", "cor_auto", "npn", "spearman". Spearman correlations are suggested when ordinal data is used. Npn can be used when data is skewed, as it first applies nonparanormal transformation to the data via huge.npn, and then computes the correlations. Note that, when this argument is not specified, the first option listed in the helpfile is chosen 
-* `missing`: This specified how missing data should be handled. The options are "pairwise", "listwise", "fiml" and "stop". Pairwise deletion uses all available data when possible and listwise deletion removes rows with any missing data. FIML stands for Full-Information Maximum likelihood. Stop will give an error message when the data contains missing values. 
-* Other important arguments depend on the default network method that was chosen and can be found in the help file.  
+
+-  `corMethod`: This is the correlation that is used. The options are "cor", "cov", "cor_auto", "npn", "spearman". Spearman correlations are suggested when ordinal data is used. Npn can be used when data is skewed, as it first applies nonparanormal transformation to the data via huge.npn, and then computes the correlations. Note that, when this argument is not specified, the first option listed in the helpfile is chosen.
+
+- `missing`: This specified how missing data should be handled. The options are "pairwise", "listwise", "fiml" and "stop". Pairwise deletion uses all available data when possible and listwise deletion removes rows with any missing data. FIML stands for Full-Information Maximum likelihood. Stop will give an error message when the data contains missing values. 
+
+- Other important arguments depend on the default network method that was chosen and can be found in the help file.  
 
 ### Running an Analysis
 

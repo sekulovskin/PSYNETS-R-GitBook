@@ -6,3 +6,12 @@ tseries
 ggplot2
 bootnet
 psychonetrics
+gtools
+corpcor
+mgm
+igraph
+BiocGenerics
+graph
+RBGL
+pcalg
+MASS
